@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/29 14:24:27 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:17:36 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,40 +33,6 @@ int	ft_render_the_game(t_map *map)
 	put_minimap(map);
 	return (0);
 }
-// typedef struct s_v
-// {
-//     double    x;
-//     double    y;
-//     double    px;
-//     double    py;
-//     int        line;
-// }            t_v;
-
-// void    draw_line(t_data *globel)
-// {
-//     t_v        v;
-//     int        dx;
-//     int        dy;
-//     int        line;
-
-
-//     dx = (*globel)->g_player->line_x - 100;
-//     dy = (*globel)->g_player->line_y - 100;
-//     if (abs(dx) > abs(dy))
-//         line = abs(dx);
-//     else
-//         line = abs(dy);
-//     v.x = (double)dx / (double)line;
-//     v.y = (double)dy / (double)line;
-//     v.px = 100;
-//     v.py = 100;
-//     while (line--)
-//     {
-//         my_put_pixel(globel, ((int)v.px), ((int)v.py), color);
-//         v.px += v.x;
-//         v.py += v.y;
-//     }
-// }
 
 void	draw_minimap_line(t_map *map, double x, double y)
 {
@@ -228,8 +194,8 @@ void	ft_calc_right_angle(t_map *map)
 	puts("move front right");
 	double x;
 	double y;
-	x = map->player_x + (cos(map->angle - ((M_PI / 2))) * map->move_speed);
-	y = map->player_y + (sin(map->angle - ((M_PI / 2))) * map->move_speed);
+	x = map->player_x + (cos(map->angle + (M_PI / 2)) * map->move_speed);
+	y = map->player_y + (sin(map->angle + (M_PI / 2)) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
 		return ;
 	map->player_x = x;
@@ -242,8 +208,8 @@ void	ft_calc_left_angle(t_map *map)
 	puts("move front left");
 	double x;
 	double y;
-	x = map->player_x + (cos(map->angle + (M_PI / 2)) * map->move_speed);
-	y = map->player_y + (sin(map->angle + (M_PI / 2)) * map->move_speed);
+	x = map->player_x + (cos(map->angle - (M_PI / 2)) * map->move_speed);
+	y = map->player_y + (sin(map->angle - (M_PI / 2)) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
 		return ;
 	map->player_x = x;
@@ -284,7 +250,6 @@ int	execution(t_map map)
 			&map.img.bits_per_M_PIxel, &map.img.line_length,
 			&map.img.endian);
 	print_map(map.map);
-	// ft_render_the_game(&map);
 	mlx_hook(map.win, 2, 0, key_hook1, &map);
 	mlx_hook(map.win, 3, 0, key_hook2, &map);
 	mlx_loop_hook(map.mlx, ft_update, &map);
