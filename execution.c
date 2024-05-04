@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/04 16:31:36 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/04 20:29:31 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ void	draw_wall_now(t_map *map, int y, int x)
 	j = 0;
 	while (i < 31)
 	{
-		// puts("Wi");
 		while (j < 31)
 		{
-			// puts("Wj");
 			my_mlx_M_PIxel_put(&map->img, (j+x), (i+y), BLACK);
 			j++;
 		}
@@ -42,10 +40,8 @@ void	draw_floor_now(t_map *map, int y, int x)
 	j = 0;
 	while (i < 31)
 	{
-		// puts("Fi");
 		while (j < 31)
 		{
-			// puts("Fj");
 			my_mlx_M_PIxel_put(&map->img, (j+x), (i+y), WHITE);
 			j++;
 		}
@@ -54,25 +50,73 @@ void	draw_floor_now(t_map *map, int y, int x)
 	}
 }
 
+void	draw_map_ray(t_map *map, double x, double y)
+{
+	int		dx = 0;
+	int		dy = 0;
+	double	fx = 0;
+	double	fy = 0;
+	int		line;
+	double	lx;
+	double	ly;
+	
+	dx = x - (map->player_x + 200);
+	dy = y - (map->player_y + 200);
+
+	if (abs(dx) > abs(dy))
+		line = abs(dx);
+	else
+		line = abs(dy);
+	lx = (double)dx / (double)line;
+	ly = (double)dy / (double)line;
+	
+	fx = map->player_x + 200;
+	fy = map->player_y + 200;
+	printf("before dx=[%d], dy=[%d]\n", dx, dy);
+	int i = 0;
+	while (i <= line)
+	{
+		my_mlx_M_PIxel_put(&map->img, fx, fy, RED);
+		fx += lx;
+		fy += ly;
+		i++;
+	}
+	printf("after dx=[%d], dy=[%d]\n", dx, dy);
+}
+
+void	calc_player_view(t_map *map)
+{
+	double	x;
+	double	y;
+
+	x = map->player_x + 200;
+	y = map->player_y + 200;
+	x += (cos(map->angle) * 64);
+	y += (sin(map->angle) * 64);
+	printf("%f x=[%f] y=[%f] ******\n", map->angle, x,y);
+	draw_map_ray(map, x, y);
+}
+
 void	put_player_inmap(t_map *map)
 {
 	int	i;
 	int	j;
+	
 
-	i = 0;
-	j = 0;
+	i = -8;
+	j = -8;
+	printf("player_x=[%f], player_y=[%f]\n", map->player_x, map->player_y);
 	while (i < 8)
 	{
-		// puts("Pi");
 		while (j < 8)
 		{
-			// puts("Pj");
-			my_mlx_M_PIxel_put(&map->img, ((32*map->player_x)+j), ((32*map->player_y)+i), RED);
+			my_mlx_M_PIxel_put(&map->img, (200+(map->player_x)+j), (200+(map->player_y)+i), RED);
 			j++;
 		}
-		j = 96;
+		j = -8;
 		i++;
 	}
+	calc_player_view(map);
 	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
 }
 
@@ -90,10 +134,8 @@ void	put_map(t_map *map)
 	printf("my=[%f], mx=[%f]\n", map->my, map->mx);
 	while (i < (int)(map->my - 1))
 	{
-		// puts("1i");
 		while (j < (int)(map->mx - 1))
 		{
-			// puts("1j");
 			if (map->map[i][j] == '1')
 				draw_wall_now(map, 200+(i*32), 200+(j*32));
 			else
@@ -103,7 +145,7 @@ void	put_map(t_map *map)
 		j = 1;
 		i++;
 	}	
-	// put_player_inmap(map);
+	put_player_inmap(map);
 }
 
 double    normlize(double rayangle)
@@ -140,8 +182,6 @@ int	ft_render_the_game(t_map *map)
 	map->angle = normlize(map->angle);
 	put_background(map);
 	put_map(map);
-	// puts("ok");
-	// exit(1);
 	put_minimap(map);
 	return (0);
 }
