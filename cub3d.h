@@ -13,8 +13,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define SCREEN_HEIGHT 1500
-# define SCREEN_WIDTH 1000
+# define SCREEN_HEIGHT 1000
+# define SCREEN_WIDTH 1500
 # define MINIMAP_WIDTH 275
 # define MINIMAP_HEIGHT 275
 
@@ -23,6 +23,8 @@
 # define BLACK 0x000000
 # define GREEN 0x2F5233
 # define BLUE 0x0000FF
+# define BACKGROUND 0xCDB79E
+
 // # define M_PI 3.1415926535
 # define FOV 60
 # define PLAYER_SPEED 4

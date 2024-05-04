@@ -6,15 +6,104 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/29 17:17:36 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/04 16:31:36 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	draw_wall_now(t_map *map, int y, int x)
+{
+	int i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (i < 31)
+	{
+		// puts("Wi");
+		while (j < 31)
+		{
+			// puts("Wj");
+			my_mlx_M_PIxel_put(&map->img, (j+x), (i+y), BLACK);
+			j++;
+		}
+		j  = 0;
+		i++;
+	}
+}
+
+void	draw_floor_now(t_map *map, int y, int x)
+{
+	int i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (i < 31)
+	{
+		// puts("Fi");
+		while (j < 31)
+		{
+			// puts("Fj");
+			my_mlx_M_PIxel_put(&map->img, (j+x), (i+y), WHITE);
+			j++;
+		}
+		j  = 0;
+		i++;
+	}
+}
+
+void	put_player_inmap(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < 8)
+	{
+		// puts("Pi");
+		while (j < 8)
+		{
+			// puts("Pj");
+			my_mlx_M_PIxel_put(&map->img, ((32*map->player_x)+j), ((32*map->player_y)+i), RED);
+			j++;
+		}
+		j = 96;
+		i++;
+	}
+	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+}
+
 void	put_map(t_map *map)
 {
-	(void)map;
+	int	x;
+	int	y;
+	int	i;
+	int	j;
+
+	x = 200;
+	y = 200;
+	i = 1;
+	j = 1;
+	printf("my=[%f], mx=[%f]\n", map->my, map->mx);
+	while (i < (int)(map->my - 1))
+	{
+		// puts("1i");
+		while (j < (int)(map->mx - 1))
+		{
+			// puts("1j");
+			if (map->map[i][j] == '1')
+				draw_wall_now(map, 200+(i*32), 200+(j*32));
+			else
+				draw_floor_now(map, 200+(i*32), 200+(j*32));
+			j++;
+		}
+		j = 1;
+		i++;
+	}	
+	// put_player_inmap(map);
 }
 
 double    normlize(double rayangle)
@@ -25,11 +114,34 @@ double    normlize(double rayangle)
     return (rayangle);
 }
 
+void	put_background(t_map *map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < SCREEN_HEIGHT)
+	{
+		while (j < SCREEN_WIDTH)
+		{
+			my_mlx_M_PIxel_put(&map->img, j, i, BACKGROUND);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+}
+
 int	ft_render_the_game(t_map *map)
 {
 	mlx_clear_window(map->mlx, map->win);
 	map->angle = normlize(map->angle);
+	put_background(map);
 	put_map(map);
+	// puts("ok");
+	// exit(1);
 	put_minimap(map);
 	return (0);
 }
@@ -243,8 +355,8 @@ int	ft_update(t_map *map)
 int	execution(t_map map)
 {
 	map.mlx = mlx_init();
-	map.win = mlx_new_window(map.mlx, map.height, map.width, "cub3D");
-	map.img.img = mlx_new_image(map.mlx, map.height, map.width);
+	map.win = mlx_new_window(map.mlx, map.width, map.height, "cub3D");
+	map.img.img = mlx_new_image(map.mlx, map.width, map.height);
 	mlx_hook(map.win, 17, 0, &close_window, &map);
 	map.img.addr = mlx_get_data_addr(map.img.img,
 			&map.img.bits_per_M_PIxel, &map.img.line_length,

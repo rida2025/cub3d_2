@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/29 13:31:20 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/04 16:17:42 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	set_important_values(t_map *info, int i, int j)
 	char	x;
 
 	x = 'A';
-	info->height = 1500;
-	info->width = 1000;
+	info->height = SCREEN_HEIGHT;
+	info->width = SCREEN_WIDTH;
 	while (info->map[i])
 	{
 		while (info->map[i][j])
