@@ -37,6 +37,7 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <math.h>
+# include <limits.h>
 
 typedef struct s_data
 {
@@ -44,12 +45,19 @@ typedef struct s_data
 	char	*addr;
 	int		bits_per_M_PIxel;
 	int		line_length;
+	int		line_width;
+	int		line_heigth;
+	int		size_len;
 	int		endian;
 }	t_data;
 
 typedef struct s_map
 {
 	t_data		img;
+	t_data		no_txture;
+	t_data		so_txture;
+	t_data		we_txture;
+	t_data		es_txture;
 	int			height;
 	int			width;
 	void		*mlx;
@@ -64,17 +72,39 @@ typedef struct s_map
 	char		*east_path;
 	int			floor[3];
 	int			floor_color;
-	int			floor_ceiling;
+	int			ceiling_color;
 	int			ceiling[3];
 	char		**map;
 	double		mini_x;
 	double		mini_y;
 	double		my;
 	double		mx;
-	double		player_x;
-	double		player_y;
-	double		position_x;
-	double		position_y;
+	double		player_x; // position in the map for the grid so its + 0.5 * 32
+	double		player_y; // position in the map for the grid so its + 0.5 * 32
+	double		position_x; //position in the map
+	double		position_y; //position in the map
+	double		xstep;
+	double		ystep;
+	double		intercept_x;
+	double		intercept_y;
+	double		horizontal_x;
+	double		horizontal_y;
+	double		vertical_x;
+	double		vertical_y;
+	int			horizontal;
+	int			vertical;
+	int			right;
+	int			up;
+	int			left;
+	int			dawn;
+	double		distance;
+	double		true_distance;
+	double		Hitx;
+	double		Hity;
+	int			verticalHit;
+	int			horizontalHit;
+	double		obj_distance;
+	double		obj_height;
 	double		move_speed;
 	double		angle;
 	double		rot_speed;
@@ -88,6 +118,9 @@ typedef struct s_map
 	int			move_right_angle;
 	int			move_left_angle;
 	int			drawzy;
+	int			offset_x;
+	int			offset_y;
+	unsigned int *buffer;
 }	t_map;
 
 typedef struct s_mapheader
@@ -168,6 +201,7 @@ char	*ft_strjoinx(char *remain, char *buffer);
 char	*get_next_line(int fd);
 int		get_lines(int fd);
 int		stop_here2(char *str);
+double    normlize(double rayangle);
 
 //errors
 void	error1(void);

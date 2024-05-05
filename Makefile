@@ -32,7 +32,7 @@ SRC_C =	tools/ft_isnum.c \
 
 COMM_PILER = cc
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -Ofast -g -fsanitize=address
 
 OBJC = $(SRC_C:.c=.o)
 

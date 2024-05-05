@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:24:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/29 13:44:14 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:15:11 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	my_mlx_M_PIxel_put(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + ((y * data->line_length) + (x * (data->bits_per_M_PIxel / 8)));
-	*(unsigned int *)dst = color;
+	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
+		*(unsigned int *)dst = color;
 }
 
 int	key_hook1(int keycode, t_map *map)
