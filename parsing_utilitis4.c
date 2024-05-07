@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:18:35 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/28 18:22:51 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:20:49 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ void	basic_init(t_mapheader *mapheader)
 	mapheader->c = 0;
 }
 
+int	count_c(char *str, char c)
+{
+	int	i;
+	
+	i = 0;
+	while (*str)
+	{
+		str++;
+		if (*str == c)
+			i++;
+	}
+	return (i);
+}
+
 int	valid_colors(t_map *map, char *str, int f_or_c)
 {
 	char	**tmp;
@@ -29,6 +43,8 @@ int	valid_colors(t_map *map, char *str, int f_or_c)
 
 	tmp = NULL;
 	i = 0;
+	if (count_c(str, ',') > 2)
+		return (1);
 	tmp = ft_split(str, ',');
 	if (!tmp)
 		return (1);
