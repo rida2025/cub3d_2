@@ -6,112 +6,11 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/05 20:17:34 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:56:42 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void	draw_wall_now(t_map *map, int y, int x)
-// {
-// 	int i;
-// 	int	j;
-	
-// 	i = 0;
-// 	j = 0;
-// 	while (i < 31)
-// 	{
-// 		while (j < 31)
-// 		{
-// 			my_mlx_M_PIxel_put(&map->img, (j+x), (i+y), BLACK);
-// 			j++;
-// 		}
-// 		j  = 0;
-// 		i++;
-// 	}
-// }
-
-// void	draw_floor_now(t_map *map, int y, int x)
-// {
-// 	int i;
-// 	int	j;
-	
-// 	i = 0;
-// 	j = 0;
-// 	while (i < 31)
-// 	{
-// 		while (j < 31)
-// 		{
-// 			my_mlx_M_PIxel_put(&map->img, (j+x), (i+y), WHITE);
-// 			j++;
-// 		}
-// 		j  = 0;
-// 		i++;
-// 	}
-// }
-
-// void	draw_map_ray(t_map *map, double x, double y)
-// {
-// 	int		dx = 0;
-// 	int		dy = 0;
-// 	double	fx = 0;
-// 	double	fy = 0;
-// 	int		line;
-// 	double	lx;
-// 	double	ly;
-	
-// 	dx = x - (map->player_x + 200);
-// 	dy = y - (map->player_y + 200);
-
-// 	if (abs(dx) > abs(dy))
-// 		line = abs(dx);
-// 	else
-// 		line = abs(dy);
-// 	lx = (double)dx / (double)line;
-// 	ly = (double)dy / (double)line;
-	
-// 	fx = map->player_x + 200;
-// 	fy = map->player_y + 200;
-// 	printf("before dx=[%d], dy=[%d]\n", dx, dy);
-// 	int i = 0;
-// 	while (i <= line)
-// 	{
-// 		my_mlx_M_PIxel_put(&map->img, fx, fy, RED);
-// 		fx += lx;
-// 		fy += ly;
-// 		i++;
-// 	}
-// 	printf("after dx=[%d], dy=[%d]\n", dx, dy);
-// }
-
-// void	calc_player_view(t_map *map)
-// {
-// 	double	x;
-// 	double	y;
-
-// 	/*
-		
-// 	*/
-// 	double rayangle = map->angle;
-// 	map->angle = map->angle - (map->fov / 2);
-// 	x = map->player_x + 200;
-// 	y = map->player_y + 200;
-// 	x += (cos(map->angle) * 200);
-// 	y += (sin(map->angle) * 200);
-// 	printf("%f x=[%f] y=[%f] ******\n", map->angle, x,y);
-// 	int i = 0;
-// 	while (i < 120)
-// 	{
-// 		draw_map_ray(map, x, y);
-// 		map->angle += (1 * (M_PI / 180) / 2);
-// 		x = map->player_x + 200;
-// 		y = map->player_y + 200;
-// 		x += (cos(map->angle) * 200);
-// 		y += (sin(map->angle) * 200);
-// 		i++;
-// 	}
-// 	map->angle = rayangle;
-// }
 
 int	is_wall2(t_map *map, double horizontal_x, double horizontal_y)
 {
@@ -130,7 +29,6 @@ int	is_wall2(t_map *map, double horizontal_x, double horizontal_y)
 
 void	horizontal_helper(t_map *map, double ray_angle)
 {
-	puts("horizontal_helper");
 	map->intercept_y = floor(map->player_y / 32) * 32;
 	if (map->dawn)
 		map->intercept_y += 32;
@@ -138,10 +36,10 @@ void	horizontal_helper(t_map *map, double ray_angle)
 	map->ystep = 32;
 	if (map->up)
 		map->ystep *= -1;
-	map->xstep = map->ystep / tan(ray_angle);
-	if (map->up && map->xstep > 0)
+	map->xstep = 32 / tan(ray_angle);
+	if (map->left && map->xstep > 0)
 		map->xstep *= -1;
-	if (map->dawn && map->xstep < 0)
+	if (map->right && map->xstep < 0)
 		map->xstep *= -1;
 	map->horizontal = 0;
 }
@@ -151,14 +49,13 @@ void	horizontal(t_map *map, double ray_angle)
 	double	horizontal_x;
 	double	horizontal_y;
 
-	puts("horizontal");
 	horizontal_helper(map, ray_angle);
 	horizontal_y = map->intercept_y;
 	horizontal_x = map->intercept_x;
 	while (horizontal_y >= 0 && horizontal_x >= 0
 		&& horizontal_x <= ((map->mx - 2) * 32) && horizontal_y <= ((map->my - 2) * 32))
 	{
-		if (is_wall2(map, horizontal_x, horizontal_y - map->up))
+		if (is_wall2(map, horizontal_x, (horizontal_y - map->up)))
 		{
 			map->horizontal_x = horizontal_x;
 			map->horizontal_y = horizontal_y;
@@ -174,7 +71,6 @@ void	horizontal(t_map *map, double ray_angle)
 
 void	vertical_helper(t_map *map, double ray_angle)
 {
-	puts("vertical_helper");
 	map->intercept_x = floor(map->player_x / 32) * 32;
 	if (map->right)
 		map->intercept_x += 32;
@@ -182,11 +78,11 @@ void	vertical_helper(t_map *map, double ray_angle)
 	map->xstep = 32;
 	if (map->left)
 		map->xstep *= -1;
-	map->ystep = map->xstep * tan(ray_angle);
-	if (map->left && map->xstep > 0)
-		map->xstep *= -1;
-	if (map->right && map->xstep < 0)
-		map->xstep *= -1;
+	map->ystep = 32 * tan(ray_angle);
+	if (map->up && map->ystep > 0)
+		map->ystep *= -1;
+	if (map->dawn && map->ystep < 0)
+		map->ystep *= -1;
 	map->vertical = 0;
 }
 
@@ -195,15 +91,13 @@ void	vertical(t_map *map, double ray_angle)
 	double	vertical_x;
 	double	vertical_y;
 
-	puts("vertical");
 	vertical_helper(map, ray_angle);
 	vertical_y = map->intercept_y;
 	vertical_x = map->intercept_x;
 	while (vertical_y >= 0 && vertical_x >= 0
 		&& vertical_x <= ((map->mx - 2) * 32) && vertical_y <= ((map->my - 2) * 32))
 	{
-		puts("hatamoto");
-		if (is_wall2(map, vertical_x - map->left, vertical_y))
+		if (is_wall2(map, (vertical_x - map->left), vertical_y))
 		{
 			map->vertical_x = vertical_x;
 			map->vertical_y = vertical_y;
@@ -219,7 +113,6 @@ void	vertical(t_map *map, double ray_angle)
 
 void	reset(t_map *map, double ray_angle)
 {
-	puts("reset");
 	map->right = 0;
 	map->up = 0;
 	map->left = 0;
@@ -228,7 +121,7 @@ void	reset(t_map *map, double ray_angle)
 		map->dawn = 1;
 	if (!map->dawn)
 		map->up = 1;
-	if (ray_angle > (M_PI / 2) && ray_angle < (3 * M_PI) / 2)
+	if (ray_angle < (M_PI / 2) || ray_angle < (3 * M_PI) / 2)
 		map->right = 1;
 	if (!map->right)
 		map->left = 1;
@@ -241,7 +134,6 @@ double	distance_finder(double x1, double y1, double x2, double y2)
 
 void	find_helper(t_map *map, double *hori_dis, double *vert_dis)
 {
-	puts("find_helper");
 	if (map->horizontal)
 		*hori_dis = distance_finder(map->player_x,
 			map->player_y, map->horizontal_x, map->horizontal_y);
@@ -249,14 +141,13 @@ void	find_helper(t_map *map, double *hori_dis, double *vert_dis)
 		*hori_dis = LONG_MAX;
 	if (map->vertical)
 		*vert_dis = distance_finder(map->player_x,
-			map->player_y, map->horizontal_x, map->horizontal_y);
+			map->player_y, map->vertical_x, map->vertical_y);
 	if (!map->vertical)
 		*vert_dis = LONG_MAX;
 }
 
 void	find_shortest(t_map *map)
 {
-	puts("find_shortest");
 	double	horizontal_distance;
 	double	vertical_distance;
 	
@@ -330,7 +221,6 @@ void	rendering(t_map *map, int column, double ray_angle)
 	double foctor;
 	t_data	*img;
 
-	puts("rendering");
 	i = 0;
 	top = 0;
 	bottom = 0;
@@ -347,12 +237,10 @@ void	rendering(t_map *map, int column, double ray_angle)
 	}
 	while (i < SCREEN_HEIGHT)
 		my_mlx_M_PIxel_put(&map->img, column, i++, map->floor_color);
-	
 }
 
 void	ray_casting(t_map *map, int column, double ray_angle)
 {
-	puts("ray_casting");
 	ray_angle = normlize(ray_angle);
 	reset(map, ray_angle);
 	horizontal(map, ray_angle);
@@ -363,7 +251,6 @@ void	ray_casting(t_map *map, int column, double ray_angle)
 
 void	put_map(t_map *map)
 {
-	puts("put_map");
 	int	column = 0;
 	double rayangle = map->angle - (map->fov / 2);
 	while (column < map->num_rays)
@@ -404,10 +291,7 @@ void	put_background(t_map *map)
 
 int	ft_render_the_game(t_map *map)
 {
-	puts("ft_render_the_game");
 	mlx_clear_window(map->mlx, map->win);
-	// map->angle = normlize(map->angle);
-	// put_background(map);
 	put_map(map);
 	put_minimap(map);
 	return (0);
@@ -415,16 +299,18 @@ int	ft_render_the_game(t_map *map)
 
 void	draw_minimap_line(t_map *map, double x, double y)
 {
-	int		dx = 0;
-	int		dy = 0;
-	double	fx = 0;
-	double	fy = 0;
+	int		dx;
+	int		dy;
+	double	fx;
+	double	fy;
 	int		line;
 	double	lx;
 	double	ly;
 	
 	dx = x - 100;
 	dy = y - 100;
+	fx = 100;
+	fy = 100;
 
 	if (abs(dx) > abs(dy))
 		line = abs(dx);
@@ -433,9 +319,6 @@ void	draw_minimap_line(t_map *map, double x, double y)
 	lx = (double)dx / (double)line;
 	ly = (double)dy / (double)line;
 	
-	fx = 100;
-	fy = 100;
-	printf("before dx=[%d], dy=[%d]\n", dx, dy);
 	int i = 0;
 	while (i <= line)
 	{
@@ -445,7 +328,6 @@ void	draw_minimap_line(t_map *map, double x, double y)
 		fy += ly;
 		i++;
 	}
-	printf("after dx=[%d], dy=[%d]\n", dx, dy);
 }
 
 void	calc_minimap_line(t_map *map)
@@ -457,7 +339,6 @@ void	calc_minimap_line(t_map *map)
 	y = 100;
 	x += (cos(map->angle) * 20);
 	y += (sin(map->angle) * 20);
-	printf("%f x=[%f] y=[%f] ******\n", map->angle, x,y);
 	draw_minimap_line(map, x, y);
 }
 
@@ -526,28 +407,24 @@ void	put_minimap(t_map *map)
 
 void	ft_calc_right(t_map *map)
 {
-	puts("move right");
 	map->angle += 1 * (M_PI / 180);
 	map->drawzy = 1;
 }
 
 void	ft_calc_left(t_map *map)
 {
-	puts("move left");
 	map->angle -= 1 * (M_PI / 180);
 	map->drawzy = 1;
 }
 
 void	ft_calc_front(t_map *map)
 {
-	puts("move front");
 	double x;
 	double y;
 	x = map->player_x + (cos(map->angle) * map->move_speed);
 	y = map->player_y + (sin(map->angle) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
 	{
-		puts("is wall");
 		return ;
 	}
 	map->player_x = x;
@@ -557,7 +434,6 @@ void	ft_calc_front(t_map *map)
 
 void	ft_calc_back(t_map *map)
 {
-	puts("move back");
 	double x;
 	double y;
 	x = map->player_x - (cos(map->angle) * map->move_speed);
@@ -571,7 +447,6 @@ void	ft_calc_back(t_map *map)
 
 void	ft_calc_right_angle(t_map *map)
 {
-	puts("move front right");
 	double x;
 	double y;
 	x = map->player_x + (cos(map->angle + (M_PI / 2)) * map->move_speed);
@@ -585,7 +460,6 @@ void	ft_calc_right_angle(t_map *map)
 
 void	ft_calc_left_angle(t_map *map)
 {
-	puts("move front left");
 	double x;
 	double y;
 	x = map->player_x + (cos(map->angle - (M_PI / 2)) * map->move_speed);
@@ -613,7 +487,6 @@ int	ft_update(t_map *map)
 		ft_calc_left_angle(map);
 	if (map->drawzy)
 	{
-		puts("entered");
 		map->drawzy = 0;
 		ft_render_the_game(map);
 	}
