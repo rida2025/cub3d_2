@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/07 13:56:42 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:59:30 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	reset(t_map *map, double ray_angle)
 		map->dawn = 1;
 	if (!map->dawn)
 		map->up = 1;
-	if (ray_angle < (M_PI / 2) || ray_angle < (3 * M_PI) / 2)
+	if (ray_angle < (M_PI / 2) || ray_angle > (3 * M_PI) / 2)
 		map->right = 1;
 	if (!map->right)
 		map->left = 1;
