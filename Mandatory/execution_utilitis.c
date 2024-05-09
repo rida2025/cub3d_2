@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:24:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 12:33:21 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:57:54 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,13 @@ void	my_mlx_M_PIxel_put(t_data *data, int x, int y, int color)
 
 int	key_hook1(int keycode, t_map *map)
 {
-	puts("key press");
 	if (keycode == 53)
 	{
 		mlx_destroy_window(map->mlx, map->win);
 		exit(0);
 	}
 	else if (keycode == 13 || keycode == 126)
-	{
-		puts("w or up_arrow");
 		map->move_up = 1;
-	}
 	else if (keycode == 1 || keycode == 125)
 		map->move_down = 1;
 	else if (keycode == 124)
@@ -60,7 +56,6 @@ int	key_hook1(int keycode, t_map *map)
 
 int	key_hook2(int keycode, t_map *map)
 {
-	puts("key release");
 	if (keycode == 13 || keycode == 126)
 		map->move_up = 0;
 	else if (keycode == 1 || keycode == 125)

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_textures_and_colors.c                        :+:      :+:    :+:   */
+/*   check_textures_and_colors_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:46:40 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/28 18:22:47 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:34:01 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_colors(t_map *map, char *line, t_mapheader *mapheader, int *i)
 {

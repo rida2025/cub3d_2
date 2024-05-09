@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 12:32:15 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:33:17 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	set_important_values2(t_map *map)
 	map->left = 0;
 	map->dawn = 0;
 }
+
 void	set_texture(t_map *map)
 {
 	map->mlx = mlx_init();

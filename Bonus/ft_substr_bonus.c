@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_substr_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:22:06 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/23 17:39:20 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:34:34 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d_bonus.h"
 
 static	char	*ft_cpystr(char const *s, unsigned int start, size_t len)
 {

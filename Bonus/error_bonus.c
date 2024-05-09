@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:20:16 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/28 17:14:04 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:34:05 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	error1(void)
 {
-	write(2, "Error permission denied can open map or it doesn't exist\n", 58);
+	write(2, "Error permission denied can't open map or it doesn't exist\n", 60);
 }
 
 void	error2(void)
 {
-	write(2, "Error in map\n", 12);
+	write(2, "Error in map saction\n", 22);
 }
 
 void	error43(void)
 {
-	write(2, "Error in collores and in texture\n", 34);
+	write(2, "Error in collores or in texture saction of map\n", 48);
 }
 
 void	error5(void)

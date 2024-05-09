@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_contant.c                                :+:      :+:    :+:   */
+/*   check_map_contant_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:47:20 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/28 18:09:20 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:33:56 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	check_map_contant(t_map *map, char **map_contant, int i)
 {

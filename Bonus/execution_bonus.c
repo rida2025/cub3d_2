@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   execution_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/07 22:01:29 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:07:38 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	is_wall2(t_map *map, double horizontal_x, double horizontal_y)
 {
@@ -186,7 +186,7 @@ t_data *img_found(t_map *map, double ray_angle)
 	t_data *img;
 	if (map->verticalHit)
 	{
-		if (ray_angle > M_PI * 2 && ray_angle < (3 * M_PI) / 2)
+		if (ray_angle > M_PI / 2 && ray_angle < (3 * M_PI) / 2)
 			img = &map->we_txture;
 		else
 			img = &map->es_txture;
@@ -492,19 +492,44 @@ int	ft_update(t_map *map)
 	return (0);
 }
 
+int ft_mouse_rotation(int x, int y, t_map *map)
+{
+	int		tmp;
+	double	helper;
+	
+	tmp = map->mouse_x;
+	helper = 0;
+	if (x > SCREEN_WIDTH || x < 0 || y > SCREEN_HEIGHT || y < 0)
+	{
+		mlx_mouse_move(map->win, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+		map->mouse_x = (SCREEN_WIDTH / 2);
+		map->mouse_y = (SCREEN_HEIGHT / 2);
+		return 0;
+	}
+	if (x != map->mouse_x)
+	{
+		helper = x - map->mouse_x;
+		map->angle += helper * 0.0007f;
+		map->mouse_x = x;
+		map->drawzy = 1;	
+	}
+	return 0;
+}
+
 int	execution(t_map map)
 {
-	map.mlx = mlx_init();
-	map.win = mlx_new_window(map.mlx, map.width, map.height, "cub3D");
 	map.img.img = mlx_new_image(map.mlx, map.width, map.height);
 	mlx_hook(map.win, 17, 0, &close_window, &map);
 	map.img.addr = mlx_get_data_addr(map.img.img,
 			&map.img.bits_per_M_PIxel, &map.img.line_length,
 			&map.img.endian);
-	print_map(map.map);
 	mlx_mouse_hide();
+	mlx_mouse_move(map.win, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+	mlx_mouse_get_pos(map.win, &map.mouse_x, &map.mouse_y);
+	
 	mlx_hook(map.win, 2, 0, key_hook1, &map);
 	mlx_hook(map.win, 3, 0, key_hook2, &map);
+	mlx_hook(map.win, 6, 0, ft_mouse_rotation, &map);
 	mlx_loop_hook(map.mlx, ft_update, &map);
 	mlx_loop(map.mlx);
 	return (0);

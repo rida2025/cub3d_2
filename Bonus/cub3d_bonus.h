@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # define SCREEN_HEIGHT 1000
 # define SCREEN_WIDTH 1500
@@ -121,6 +121,8 @@ typedef struct s_map
 	int			offset_x;
 	int			offset_y;
 	unsigned int *buffer;
+	int			mouse_x;
+	int			mouse_y;
 }	t_map;
 
 typedef struct s_mapheader

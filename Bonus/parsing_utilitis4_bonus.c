@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utilitis4.c                                :+:      :+:    :+:   */
+/*   parsing_utilitis4_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:18:35 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/07 15:41:12 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:34:46 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	basic_init(t_mapheader *mapheader)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/05 20:04:12 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:34:36 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	set_important_values(t_map *info, int i, int j)
 {
@@ -68,8 +68,11 @@ void	set_important_values2(t_map *map)
 	map->left = 0;
 	map->dawn = 0;
 }
+
 void	set_texture(t_map *map)
 {
+	map->mlx = mlx_init();
+	map->win = mlx_new_window(map->mlx, map->width, map->height, "cub3D");
 	map->no_txture.img = mlx_xpm_file_to_image(map->mlx, map->north_path, &map->no_txture.line_width, &map->no_txture.line_heigth);
 	map->no_txture.addr = mlx_get_data_addr(map->no_txture.img, &map->no_txture.bits_per_M_PIxel, &map->no_txture.line_length,&map->no_txture.endian);
 	map->so_txture.img = mlx_xpm_file_to_image(map->mlx, map->south_path, &map->so_txture.line_width, &map->so_txture.line_heigth);

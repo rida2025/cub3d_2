@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 13:29:22 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:57:13 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,7 +395,6 @@ int	execution(t_map map)
 	map.img.addr = mlx_get_data_addr(map.img.img,
 			&map.img.bits_per_M_PIxel, &map.img.line_length,
 			&map.img.endian);
-	print_map(map.map);
 	mlx_hook(map.win, 2, 0, key_hook1, &map);
 	mlx_hook(map.win, 3, 0, key_hook2, &map);
 	mlx_loop_hook(map.mlx, ft_update, &map);
