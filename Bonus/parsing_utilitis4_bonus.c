@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:18:35 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/07 15:20:49 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:41:12 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	count_c(char *str, char c)
 	i = 0;
 	while (*str)
 	{
-		str++;
 		if (*str == c)
 			i++;
+		str++;
 	}
 	return (i);
 }

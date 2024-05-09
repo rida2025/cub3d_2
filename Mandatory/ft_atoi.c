@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 12:13:22 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/04/28 18:10:31 by mel-jira         ###   ########.fr       */
+/*   Created: 2024/03/10 10:39:56 by mel-jira          #+#    #+#             */
+/*   Updated: 2024/05/09 11:08:47 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
+int	ft_atoi(char *arg)
 {
-	t_map	map;
+	int	i;
+	int	result;
+	int	sign;
 
-	if (argc == 2)
+	i = 0;
+	result = 0;
+	sign = 1;
+	while (arg[i] == ' ' || (arg[i] >= 9 && arg[i] <= 13))
+		i++;
+	if (arg[i] == '+' || arg[i] == '-')
 	{
-		if (parsing(&map, argv[1]))
-			return (1);
-		if (execution(map))
-			return (1);
+		if (arg[i] == '-')
+			sign = -1;
+		i++;
 	}
-	return (0);
+	while (arg[i])
+	{
+		result = (result * 10) + (arg[i] - '0');
+		i++;
+	}
+	return ((result * sign));
 }

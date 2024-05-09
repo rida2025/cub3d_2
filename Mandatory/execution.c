@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/07 13:59:30 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:29:22 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,11 +186,10 @@ t_data *img_found(t_map *map, double ray_angle)
 	t_data *img;
 	if (map->verticalHit)
 	{
-		if (ray_angle > M_PI * 2 && ray_angle < (3 * M_PI) / 2)
+		if (ray_angle > M_PI / 2 && ray_angle < (3 * M_PI) / 2)
 			img = &map->we_txture;
 		else
 			img = &map->es_txture;
-		
 	}
 	if (map->horizontalHit)
 	{
@@ -293,116 +292,8 @@ int	ft_render_the_game(t_map *map)
 {
 	mlx_clear_window(map->mlx, map->win);
 	put_map(map);
-	put_minimap(map);
-	return (0);
-}
-
-void	draw_minimap_line(t_map *map, double x, double y)
-{
-	int		dx;
-	int		dy;
-	double	fx;
-	double	fy;
-	int		line;
-	double	lx;
-	double	ly;
-	
-	dx = x - 100;
-	dy = y - 100;
-	fx = 100;
-	fy = 100;
-
-	if (abs(dx) > abs(dy))
-		line = abs(dx);
-	else
-		line = abs(dy);
-	lx = (double)dx / (double)line;
-	ly = (double)dy / (double)line;
-	
-	int i = 0;
-	while (i <= line)
-	{
-		
-		my_mlx_M_PIxel_put(&map->img, fx, fy, RED);
-		fx += lx;
-		fy += ly;
-		i++;
-	}
-}
-
-void	calc_minimap_line(t_map *map)
-{
-	double	x;
-	double	y;
-
-	x = 100;
-	y = 100;
-	x += (cos(map->angle) * 20);
-	y += (sin(map->angle) * 20);
-	draw_minimap_line(map, x, y);
-}
-
-
-void	put_player(t_map *info)
-{
-	int	i;
-	int	j;
-
-	i = 96;
-	j = 96;
-	while (i < 104)
-	{
-		while (j < 104)
-		{
-			my_mlx_M_PIxel_put(&info->img, j, i, RED);
-			j++;
-		}
-		j = 96;
-		i++;
-	}
-	calc_minimap_line(info);
-	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
-}
-
-int	is_wall(t_map *map, int lenx, int leny)
-{
-	int	x;
-	int	y;
-
-	x = floor(lenx / 16);
-	y = floor(leny / 16);
-	if (y < 0 || y >= (map->my)
-		|| x < 0 || x >= (map->mx))
-		return (0);
-	if (map->map[y][x] == '1')
-		return (1);
-	return (0);
-}
-
-void	put_minimap(t_map *map)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	calc_minimap(map);
-	while (y < 200)
-	{
-		while (x < 200)
-		{
-			if (is_wall(map, ((map->position_x) + x), ((map->position_y) + y)))
-				my_mlx_M_PIxel_put(&map->img, x, y, BLACK);
-			else
-				my_mlx_M_PIxel_put(&map->img, x, y, WHITE);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-	put_player(map);
 	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
-	return ;
+	return (0);
 }
 
 void	ft_calc_right(t_map *map)
@@ -421,6 +312,7 @@ void	ft_calc_front(t_map *map)
 {
 	double x;
 	double y;
+
 	x = map->player_x + (cos(map->angle) * map->move_speed);
 	y = map->player_y + (sin(map->angle) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
@@ -436,6 +328,7 @@ void	ft_calc_back(t_map *map)
 {
 	double x;
 	double y;
+
 	x = map->player_x - (cos(map->angle) * map->move_speed);
 	y = map->player_y - (sin(map->angle) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
@@ -449,6 +342,7 @@ void	ft_calc_right_angle(t_map *map)
 {
 	double x;
 	double y;
+
 	x = map->player_x + (cos(map->angle + (M_PI / 2)) * map->move_speed);
 	y = map->player_y + (sin(map->angle + (M_PI / 2)) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
@@ -462,6 +356,7 @@ void	ft_calc_left_angle(t_map *map)
 {
 	double x;
 	double y;
+
 	x = map->player_x + (cos(map->angle - (M_PI / 2)) * map->move_speed);
 	y = map->player_y + (sin(map->angle - (M_PI / 2)) * map->move_speed);
 	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
@@ -495,8 +390,6 @@ int	ft_update(t_map *map)
 
 int	execution(t_map map)
 {
-	map.mlx = mlx_init();
-	map.win = mlx_new_window(map.mlx, map.width, map.height, "cub3D");
 	map.img.img = mlx_new_image(map.mlx, map.width, map.height);
 	mlx_hook(map.win, 17, 0, &close_window, &map);
 	map.img.addr = mlx_get_data_addr(map.img.img,

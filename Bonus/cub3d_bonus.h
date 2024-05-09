@@ -28,16 +28,16 @@
 // # define M_PI 3.1415926535
 # define FOV 60
 # define PLAYER_SPEED 4
-# define ROTATING_SPEED 0.045
+# define ROTATING_SPEED 1
 
 # include <string.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <mlx.h>
 # include <stdlib.h>
 # include <math.h>
 # include <limits.h>
+# include "mlx.h"
 
 typedef struct s_data
 {
