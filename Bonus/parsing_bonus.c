@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 16:34:36 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:24:17 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ void	set_important_values2(t_map *map)
 	map->up = 0;
 	map->left = 0;
 	map->dawn = 0;
+	map->focus_mode = 0;
+	map->door = 0;
+	map->doorH = 0;
+	map->doorV = 0;
+	map->DoorIsClose = 0;
+	map->near_door = 0;
 }
 
 void	set_texture(t_map *map)
@@ -81,6 +87,9 @@ void	set_texture(t_map *map)
 	map->we_txture.addr = mlx_get_data_addr(map->we_txture.img, &map->we_txture.bits_per_M_PIxel, &map->we_txture.line_length, &map->we_txture.endian);
 	map->es_txture.img = mlx_xpm_file_to_image(map->mlx, map->east_path, &map->es_txture.line_width, &map->es_txture.line_heigth);
 	map->es_txture.addr = mlx_get_data_addr(map->es_txture.img, &map->es_txture.bits_per_M_PIxel, &map->es_txture.line_length, &map->es_txture.endian);
+	
+	map->door_texture.img = mlx_xpm_file_to_image(map->mlx, "texture/door_texture.xpm", &map->door_texture.line_width, &map->door_texture.line_heigth);
+	map->door_texture.addr = mlx_get_data_addr(map->door_texture.img, &map->door_texture.bits_per_M_PIxel, &map->door_texture.line_length, &map->door_texture.endian);
 }
 
 int	parsing(t_map *map, char *map_name)

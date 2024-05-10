@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:08:00 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 16:34:44 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:31:53 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	check_characters(char **map)
 		{
 			if (map[y][x] != '0' && map[y][x] != '1' && map[y][x] != 'N'
 				&& map[y][x] != 'S' && map[y][x] != 'E' && map[y][x] != 'W'
-				&& map[y][x] != ' ')
+				&& map[y][x] != ' ' && map[y][x] != 'D' && map[y][x] != 'O')
 				return (1);
 			x++;
 		}

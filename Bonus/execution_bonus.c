@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 18:07:38 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:18:10 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	is_wall2(t_map *map, double horizontal_x, double horizontal_y)
 		return (0);
 	if (map->map[y][x] == '1')
 		return (1);
+	if (map->map[y][x] == 'D')
+		return (2);
 	return (0);
 }
 
@@ -53,10 +55,11 @@ void	horizontal(t_map *map, double ray_angle)
 	horizontal_y = map->intercept_y;
 	horizontal_x = map->intercept_x;
 	while (horizontal_y >= 0 && horizontal_x >= 0
-		&& horizontal_x <= ((map->mx - 2) * 32) && horizontal_y <= ((map->my - 2) * 32))
+		&& horizontal_x <= ((map->mx) * 32) && horizontal_y <= ((map->my) * 32))
 	{
 		if (is_wall2(map, horizontal_x, (horizontal_y - map->up)))
 		{
+			map->doorH = is_wall2(map, horizontal_x, (horizontal_y - map->up));
 			map->horizontal_x = horizontal_x;
 			map->horizontal_y = horizontal_y;
 			map->horizontal = 1;
@@ -95,10 +98,11 @@ void	vertical(t_map *map, double ray_angle)
 	vertical_y = map->intercept_y;
 	vertical_x = map->intercept_x;
 	while (vertical_y >= 0 && vertical_x >= 0
-		&& vertical_x <= ((map->mx - 2) * 32) && vertical_y <= ((map->my - 2) * 32))
+		&& vertical_x <= ((map->mx) * 32) && vertical_y <= ((map->my) * 32))
 	{
 		if (is_wall2(map, (vertical_x - map->left), vertical_y))
 		{
+			map->doorV = is_wall2(map, (vertical_x - map->left), vertical_y);
 			map->vertical_x = vertical_x;
 			map->vertical_y = vertical_y;
 			map->vertical = 1;
@@ -158,6 +162,7 @@ void	find_shortest(t_map *map)
 	find_helper(map, &horizontal_distance, &vertical_distance);
 	if (horizontal_distance < vertical_distance)
 	{
+		map->door = map->doorH;
 		map->Hitx = map->horizontal_x;
 		map->Hity = map->horizontal_y;
 		map->distance = horizontal_distance;
@@ -165,6 +170,7 @@ void	find_shortest(t_map *map)
 	}
 	else
 	{
+		map->door = map->doorV;
 		map->Hitx = map->vertical_x;
 		map->Hity = map->vertical_y;
 		map->distance = vertical_distance;
@@ -174,31 +180,43 @@ void	find_shortest(t_map *map)
 
 void	rendering_helper(t_map *map, int *top, int *bottom, double ray_angle)
 {
+	map->near_door = 0;
 	map->true_distance = map->distance * cos(ray_angle - map->angle);
 	map->obj_distance = (double)(SCREEN_WIDTH / 2) / tan(map->fov / 2);
 	map->obj_height = (32 / map->true_distance) * map->obj_distance;
 	*top = (double)(SCREEN_HEIGHT / 2) - (double)(map->obj_height / 2);
 	*bottom = (double)(SCREEN_HEIGHT / 2) + (double)(map->obj_height / 2);
+	if (map->door == 2)
+	{
+		if (map->obj_height > 700)
+			map->near_door = 1;
+	}
 }
 
 t_data *img_found(t_map *map, double ray_angle)
 {
-	t_data *img;
-	if (map->verticalHit)
+	t_data	*img;
+
+	img = NULL;
+	if (map->door == 2)
+		img = &map->door_texture;
+	else if (map->verticalHit)
 	{
-		if (ray_angle > M_PI / 2 && ray_angle < (3 * M_PI) / 2)
+		if (ray_angle > (M_PI / 2) && ray_angle < (3 * M_PI) / 2)
 			img = &map->we_txture;
 		else
 			img = &map->es_txture;
-		
 	}
-	if (map->horizontalHit)
+	else if (map->horizontalHit)
 	{
 		if (ray_angle > 0 && ray_angle < M_PI)
 			img = &map->so_txture;
 		else
 			img = &map->no_txture;
 	}
+	map->door = 0;
+	map->doorH = 0;
+	map->doorV = 0;
 	return (img);
 }
 
@@ -210,7 +228,6 @@ void	img_helper(t_map *map, t_data *img)
 		map->offset_x = (int)map->Hitx % 32;
 	map->offset_x *= img->line_width / 32;
 	map->buffer = (unsigned int *)img->addr;
-
 }
 
 void	rendering(t_map *map, int column, double ray_angle)
@@ -251,8 +268,11 @@ void	ray_casting(t_map *map, int column, double ray_angle)
 
 void	put_map(t_map *map)
 {
-	int	column = 0;
-	double rayangle = map->angle - (map->fov / 2);
+	int		column;
+	double	rayangle;
+	
+	column = 0;
+	rayangle = map->angle - (map->fov / 2);
 	while (column < map->num_rays)
 	{
 		ray_casting(map, column, rayangle);
@@ -267,26 +287,6 @@ double    normlize(double rayangle)
     if (rayangle < 0)
         rayangle += 2 * M_PI;
     return (rayangle);
-}
-
-void	put_background(t_map *map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < SCREEN_HEIGHT)
-	{
-		while (j < SCREEN_WIDTH)
-		{
-			my_mlx_M_PIxel_put(&map->img, j, i, BACKGROUND);
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
 }
 
 int	ft_render_the_game(t_map *map)
@@ -337,7 +337,6 @@ void	calc_minimap_line(t_map *map)
 	draw_minimap_line(map, x, y);
 }
 
-
 void	put_player(t_map *info)
 {
 	int	i;
@@ -371,6 +370,10 @@ int	is_wall(t_map *map, int lenx, int leny)
 		return (0);
 	if (map->map[y][x] == '1')
 		return (1);
+	if (map->map[y][x] == 'D')
+		return (2);
+	if (map->map[y][x] == 'O')
+		return (3);
 	return (0);
 }
 
@@ -386,7 +389,11 @@ void	put_minimap(t_map *map)
 	{
 		while (x < 200)
 		{
-			if (is_wall(map, ((map->position_x) + x), ((map->position_y) + y)))
+			if (is_wall(map, ((map->position_x) + x), ((map->position_y) + y)) == 2)
+				my_mlx_M_PIxel_put(&map->img, x, y, BLUE);
+			else if (is_wall(map, ((map->position_x) + x), ((map->position_y) + y)) == 3)
+				my_mlx_M_PIxel_put(&map->img, x, y, GREEN);
+			else if (is_wall(map, ((map->position_x) + x), ((map->position_y) + y)))
 				my_mlx_M_PIxel_put(&map->img, x, y, BLACK);
 			else
 				my_mlx_M_PIxel_put(&map->img, x, y, WHITE);
@@ -397,6 +404,8 @@ void	put_minimap(t_map *map)
 	}
 	put_player(map);
 	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
+	if (map->near_door)
+		mlx_string_put(map->mlx, map->win, 650, 800, RED, "click E to open the door");
 	return ;
 }
 
@@ -419,10 +428,9 @@ void	ft_calc_front(t_map *map)
 
 	x = map->player_x + (cos(map->angle) * map->move_speed);
 	y = map->player_y + (sin(map->angle) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
-	{
+	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
 		return ;
-	}
 	map->player_x = x;
 	map->player_y = y;
 	map->drawzy = 1;
@@ -435,7 +443,8 @@ void	ft_calc_back(t_map *map)
 
 	x = map->player_x - (cos(map->angle) * map->move_speed);
 	y = map->player_y - (sin(map->angle) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
+	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;
@@ -449,7 +458,8 @@ void	ft_calc_right_angle(t_map *map)
 
 	x = map->player_x + (cos(map->angle + (M_PI / 2)) * map->move_speed);
 	y = map->player_y + (sin(map->angle + (M_PI / 2)) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
+	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;
@@ -463,7 +473,8 @@ void	ft_calc_left_angle(t_map *map)
 
 	x = map->player_x + (cos(map->angle - (M_PI / 2)) * map->move_speed);
 	y = map->player_y + (sin(map->angle - (M_PI / 2)) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1')
+	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;
@@ -499,19 +510,22 @@ int ft_mouse_rotation(int x, int y, t_map *map)
 	
 	tmp = map->mouse_x;
 	helper = 0;
-	if (x > SCREEN_WIDTH || x < 0 || y > SCREEN_HEIGHT || y < 0)
+	if (map->focus_mode == 0)
 	{
-		mlx_mouse_move(map->win, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
-		map->mouse_x = (SCREEN_WIDTH / 2);
-		map->mouse_y = (SCREEN_HEIGHT / 2);
-		return 0;
-	}
-	if (x != map->mouse_x)
-	{
-		helper = x - map->mouse_x;
-		map->angle += helper * 0.0007f;
-		map->mouse_x = x;
-		map->drawzy = 1;	
+		if (x > SCREEN_WIDTH || x < 0 || y > SCREEN_HEIGHT || y < 0)
+		{
+			mlx_mouse_move(map->win, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+			map->mouse_x = (SCREEN_WIDTH / 2);
+			map->mouse_y = (SCREEN_HEIGHT / 2);
+			return 0;
+		}
+		if (x != map->mouse_x)
+		{
+			helper = x - map->mouse_x;
+			map->angle += helper * 0.0007f;
+			map->mouse_x = x;
+			map->drawzy = 1;
+		}
 	}
 	return 0;
 }
@@ -526,7 +540,6 @@ int	execution(t_map map)
 	mlx_mouse_hide();
 	mlx_mouse_move(map.win, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
 	mlx_mouse_get_pos(map.win, &map.mouse_x, &map.mouse_y);
-	
 	mlx_hook(map.win, 2, 0, key_hook1, &map);
 	mlx_hook(map.win, 3, 0, key_hook2, &map);
 	mlx_hook(map.win, 6, 0, ft_mouse_rotation, &map);

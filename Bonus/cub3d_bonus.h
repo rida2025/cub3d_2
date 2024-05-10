@@ -58,6 +58,7 @@ typedef struct s_map
 	t_data		so_txture;
 	t_data		we_txture;
 	t_data		es_txture;
+	t_data		door_texture;
 	int			height;
 	int			width;
 	void		*mlx;
@@ -123,6 +124,12 @@ typedef struct s_map
 	unsigned int *buffer;
 	int			mouse_x;
 	int			mouse_y;
+	int			focus_mode;
+	int			door;
+	int			DoorIsClose;
+	int 		doorH;
+	int 		doorV;
+	int			near_door;
 }	t_map;
 
 typedef struct s_mapheader

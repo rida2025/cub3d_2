@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/mel-jira/Desktop/cub3d_2",
-      "program": "/Users/mel-jira/Desktop/cub3d_2/build/Debug/outDebug"
+      "cwd": "/Users/mel-jira/Desktop/cub3d_2/Bonus",
+      "program": "/Users/mel-jira/Desktop/cub3d_2/Bonus/build/Debug/outDebug"
     }
   ]
 }
