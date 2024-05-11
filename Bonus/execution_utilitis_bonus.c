@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:24:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/10 18:22:58 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:05:22 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,17 @@ void	my_mlx_M_PIxel_put(t_data *data, int x, int y, int color)
 
 void	open_or_close(t_map *map)
 {
-	if (map->horizontalHit)
+	int x;
+	int y;
+
+	x = floor(map->player_x + (cos(map->angle) * 16)) / 32;
+	y = floor(map->player_y + (sin(map->angle) * 16)) / 32;
+	if (map->map[y][x] == 'D')
+		map->map[y][x] = 'O';
+	else if (map->map[y][x] == 'O')
 	{
-		if (map->map[(int)floor(map->Hity / 32) - map->up][(int)floor(map->Hitx / 32)] == 'D')
-			map->map[(int)floor(map->Hity / 32) - map->up][(int)floor(map->Hitx / 32)] = 'O';
-	}
-	else
-	{
-		if (map->map[(int)floor(map->Hity / 32)][(int)floor(map->Hitx / 32)  - map->left] == 'D')
-			map->map[(int)floor(map->Hity / 32)][(int)floor(map->Hitx / 32) - map->left] = 'O';
+		if (map->map[(int)(map->player_y / 32)][(int)(map->player_x / 32)] != 'O')
+			map->map[y][x] = 'D';
 	}
 	map->drawzy = 1;
 }
@@ -70,7 +72,7 @@ int	key_hook1(int keycode, t_map *map)
 		map->focus_mode = 1;
 	else if (keycode == 3 && map->focus_mode == 1)
 		map->focus_mode = 0;
-	else if (keycode == 14 && map->near_door)
+	else if (keycode == 14)
 		open_or_close(map);
 	return (0);
 }

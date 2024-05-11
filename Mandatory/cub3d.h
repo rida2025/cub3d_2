@@ -27,7 +27,7 @@
 
 // # define M_PI 3.1415926535
 # define FOV 60
-# define PLAYER_SPEED 4
+# define PLAYER_SPEED 3
 # define ROTATING_SPEED 1
 
 # include <string.h>

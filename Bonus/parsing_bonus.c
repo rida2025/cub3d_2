@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/10 16:24:17 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:09:29 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	set_important_values2(t_map *map)
 	map->rot_speed = 1 *  (M_PI / 180);
 	map->fov = 60 * (M_PI / 180);
 	map->num_rays = SCREEN_WIDTH;
-	map->move_speed = 5;
+	map->move_speed = PLAYER_SPEED;
 	map->move_up = 0;
 	map->move_down = 0;
 	map->move_right = 0;
@@ -71,8 +71,6 @@ void	set_important_values2(t_map *map)
 	map->door = 0;
 	map->doorH = 0;
 	map->doorV = 0;
-	map->DoorIsClose = 0;
-	map->near_door = 0;
 }
 
 void	set_texture(t_map *map)

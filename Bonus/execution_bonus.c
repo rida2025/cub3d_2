@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/10 18:18:10 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:16:36 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ int	is_wall2(t_map *map, double horizontal_x, double horizontal_y)
 		return (1);
 	if (map->map[y][x] == 'D')
 		return (2);
+	return (0);
+}
+
+int	is_what(t_map *map, double horizontal_x, double horizontal_y)
+{
+	int	x;
+	int	y;
+	
+	x = floor(horizontal_x / 32);
+	y = floor(horizontal_y / 32);
+	if (y < 0 || y >= (map->my)
+		|| x < 0 || x >= (map->mx))
+		return (0);
+	if (map->map[y][x] == 'D')
+		return (2);
+	if (map->map[y][x] == 'O')
+		return (3);
 	return (0);
 }
 
@@ -59,7 +76,7 @@ void	horizontal(t_map *map, double ray_angle)
 	{
 		if (is_wall2(map, horizontal_x, (horizontal_y - map->up)))
 		{
-			map->doorH = is_wall2(map, horizontal_x, (horizontal_y - map->up));
+			map->doorH = is_what(map, horizontal_x, (horizontal_y - map->up));
 			map->horizontal_x = horizontal_x;
 			map->horizontal_y = horizontal_y;
 			map->horizontal = 1;
@@ -68,8 +85,6 @@ void	horizontal(t_map *map, double ray_angle)
 		horizontal_x += map->xstep;
 		horizontal_y += map->ystep;
 	}
-	map->horizontal_x = LONG_MAX;
-	map->horizontal_y = LONG_MAX;
 }
 
 void	vertical_helper(t_map *map, double ray_angle)
@@ -102,7 +117,7 @@ void	vertical(t_map *map, double ray_angle)
 	{
 		if (is_wall2(map, (vertical_x - map->left), vertical_y))
 		{
-			map->doorV = is_wall2(map, (vertical_x - map->left), vertical_y);
+			map->doorV = is_what(map, (vertical_x - map->left), vertical_y);
 			map->vertical_x = vertical_x;
 			map->vertical_y = vertical_y;
 			map->vertical = 1;
@@ -111,8 +126,6 @@ void	vertical(t_map *map, double ray_angle)
 		vertical_x += map->xstep;
 		vertical_y += map->ystep;
 	}
-	map->vertical_x = LONG_MAX;
-	map->vertical_y = LONG_MAX;
 }
 
 void	reset(t_map *map, double ray_angle)
@@ -180,17 +193,11 @@ void	find_shortest(t_map *map)
 
 void	rendering_helper(t_map *map, int *top, int *bottom, double ray_angle)
 {
-	map->near_door = 0;
 	map->true_distance = map->distance * cos(ray_angle - map->angle);
 	map->obj_distance = (double)(SCREEN_WIDTH / 2) / tan(map->fov / 2);
 	map->obj_height = (32 / map->true_distance) * map->obj_distance;
 	*top = (double)(SCREEN_HEIGHT / 2) - (double)(map->obj_height / 2);
 	*bottom = (double)(SCREEN_HEIGHT / 2) + (double)(map->obj_height / 2);
-	if (map->door == 2)
-	{
-		if (map->obj_height > 700)
-			map->near_door = 1;
-	}
 }
 
 t_data *img_found(t_map *map, double ray_angle)
@@ -247,7 +254,7 @@ void	rendering(t_map *map, int column, double ray_angle)
 	while (i < top)
 		my_mlx_M_PIxel_put(&map->img, column, i++, map->ceiling_color);
 	foctor = img->line_heigth / map->obj_height;
-	while (i < bottom)
+	while (i < bottom && i < SCREEN_HEIGHT)
 	{
 		map->offset_y = (i - top) * foctor;
 		my_mlx_M_PIxel_put(&map->img, column, i++, map->buffer[(map->offset_y * img->line_width) + map->offset_x]);
@@ -404,8 +411,6 @@ void	put_minimap(t_map *map)
 	}
 	put_player(map);
 	mlx_put_image_to_window(map->mlx, map->win, map->img.img, 0, 0);
-	if (map->near_door)
-		mlx_string_put(map->mlx, map->win, 650, 800, RED, "click E to open the door");
 	return ;
 }
 
@@ -423,13 +428,22 @@ void	ft_calc_left(t_map *map)
 
 void	ft_calc_front(t_map *map)
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 
 	x = map->player_x + (cos(map->angle) * map->move_speed);
 	y = map->player_y + (sin(map->angle) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
-		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
+	if (map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;
@@ -443,8 +457,17 @@ void	ft_calc_back(t_map *map)
 
 	x = map->player_x - (cos(map->angle) * map->move_speed);
 	y = map->player_y - (sin(map->angle) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
-		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
+	if (map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;
@@ -458,8 +481,17 @@ void	ft_calc_right_angle(t_map *map)
 
 	x = map->player_x + (cos(map->angle + (M_PI / 2)) * map->move_speed);
 	y = map->player_y + (sin(map->angle + (M_PI / 2)) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
-		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
+	if (map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;
@@ -473,8 +505,17 @@ void	ft_calc_left_angle(t_map *map)
 
 	x = map->player_x + (cos(map->angle - (M_PI / 2)) * map->move_speed);
 	y = map->player_y + (sin(map->angle - (M_PI / 2)) * map->move_speed);
-	if (map->map[(int)floor(y / 32)][(int)floor(x / 32)] == '1'
-		|| map->map[(int)floor(y / 32)][(int)floor(x / 32)] == 'D')
+	if (map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y + 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == '1'
+		|| map->map[(int)floor((y - 6) / 32)][(int)floor(x / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x + 6) / 32)] == 'D')
+		return ;
+	if (map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == '1'
+		|| map->map[(int)floor(y / 32)][(int)floor((x - 6) / 32)] == 'D')
 		return ;
 	map->player_x = x;
 	map->player_y = y;

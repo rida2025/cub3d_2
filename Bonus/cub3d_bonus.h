@@ -126,10 +126,8 @@ typedef struct s_map
 	int			mouse_y;
 	int			focus_mode;
 	int			door;
-	int			DoorIsClose;
 	int 		doorH;
 	int 		doorV;
-	int			near_door;
 }	t_map;
 
 typedef struct s_mapheader
@@ -189,6 +187,8 @@ void	put_player(t_map *info);
 void	put_minimap(t_map *map);
 void	put_map(t_map *map);
 int		execution(t_map map);
+void	horizontal_helper(t_map *map, double ray_angle);
+void	vertical_helper(t_map *map, double ray_angle);
 
 //general tools
 int		ft_isnum(char *str);
