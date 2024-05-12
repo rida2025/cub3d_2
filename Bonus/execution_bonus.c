@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/12 16:01:15 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:49:53 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,10 +298,21 @@ double    normlize(double rayangle)
 
 void	put_weapon(t_map *map)
 {
-	if (map->i > 15)
-		map->i = 0;
+	if (map->click)
+	{
+		if (map->i < 15)
+		{
+			mlx_put_image_to_window(map->mlx, map->win, map->ptr.image[map->i], SCREEN_WIDTH / 2, SCREEN_HEIGHT - 250);
+			map->i++;
+			map->drawzy = 1;
+		}
+		else
+		{
+			map->i = 0;
+			map->click = 0;
+		}
+	}
 	mlx_put_image_to_window(map->mlx, map->win, map->ptr.image[map->i], SCREEN_WIDTH / 2, SCREEN_HEIGHT - 250);
-	map->i++;
 }
 
 int	ft_render_the_game(t_map *map)
@@ -580,6 +591,18 @@ int ft_mouse_rotation(int x, int y, t_map *map)
 	return 0;
 }
 
+int mouse_click_hook(int keycode, int x, int y, t_map *map)
+{
+	(void)x;
+	(void)y;
+	if (keycode == 1)
+	{
+		map->click = 1;
+		map->drawzy = 1;
+	}
+	return (0);
+}
+
 int	execution(t_map map)
 {
 	map.img.img = mlx_new_image(map.mlx, map.width, map.height);
@@ -593,6 +616,7 @@ int	execution(t_map map)
 	mlx_hook(map.win, 2, 0, key_hook1, &map);
 	mlx_hook(map.win, 3, 0, key_hook2, &map);
 	mlx_hook(map.win, 6, 0, ft_mouse_rotation, &map);
+	mlx_mouse_hook(map.win, mouse_click_hook, &map);
 	mlx_loop_hook(map.mlx, ft_update, &map);
 	mlx_loop(map.mlx);
 	return (0);

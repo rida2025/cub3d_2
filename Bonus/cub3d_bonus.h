@@ -65,6 +65,7 @@ typedef struct s_map
 	t_data		es_txture;
 	t_data		door_texture;
 	t_animation	ptr;
+	int			click;
 	int			i;
 	int			height;
 	int			width;

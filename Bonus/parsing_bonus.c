@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/12 16:03:33 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:46:50 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,54 +76,23 @@ void	set_important_values2(t_map *map)
 	x = 250;
 	y = 250;
 	map->i = 0;
+	map->click = 0;
 	map->ptr.image[0] = mlx_xpm_file_to_image(map->mlx, "texture/weapon1.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error0");
 	map->ptr.image[1] = mlx_xpm_file_to_image(map->mlx, "texture/weapon2.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error1");
 	map->ptr.image[2] = mlx_xpm_file_to_image(map->mlx, "texture/weapon3.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error2");
 	map->ptr.image[3] = mlx_xpm_file_to_image(map->mlx, "texture/weapon4.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error3");
 	map->ptr.image[4] = mlx_xpm_file_to_image(map->mlx, "texture/weapon5.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error4");
 	map->ptr.image[5] = mlx_xpm_file_to_image(map->mlx, "texture/weapon6.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error5");
 	map->ptr.image[6] = mlx_xpm_file_to_image(map->mlx, "texture/weapon7.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error6");
 	map->ptr.image[7] = mlx_xpm_file_to_image(map->mlx, "texture/weapon8.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error7");
 	map->ptr.image[8] = mlx_xpm_file_to_image(map->mlx, "texture/weapon9.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error8");
 	map->ptr.image[9] = mlx_xpm_file_to_image(map->mlx, "texture/weapon10.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error9");
 	map->ptr.image[10] = mlx_xpm_file_to_image(map->mlx, "texture/weapon11.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error10");
 	map->ptr.image[11] = mlx_xpm_file_to_image(map->mlx, "texture/weapon12.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error11");
 	map->ptr.image[12] = mlx_xpm_file_to_image(map->mlx, "texture/weapon13.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error12");
 	map->ptr.image[13] = mlx_xpm_file_to_image(map->mlx, "texture/weapon14.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error13");
 	map->ptr.image[14] = mlx_xpm_file_to_image(map->mlx, "texture/weapon15.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error14");
 	map->ptr.image[15] = mlx_xpm_file_to_image(map->mlx, "texture/weapon16.1.xpm", &x, &y);
-	if (!map->ptr.image[0])
-		puts("error15");
 }
 void	set_texture(t_map *map)
 {
