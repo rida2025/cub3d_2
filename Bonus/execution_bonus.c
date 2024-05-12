@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/11 20:16:36 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:01:15 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,11 +296,20 @@ double    normlize(double rayangle)
     return (rayangle);
 }
 
+void	put_weapon(t_map *map)
+{
+	if (map->i > 15)
+		map->i = 0;
+	mlx_put_image_to_window(map->mlx, map->win, map->ptr.image[map->i], SCREEN_WIDTH / 2, SCREEN_HEIGHT - 250);
+	map->i++;
+}
+
 int	ft_render_the_game(t_map *map)
 {
 	mlx_clear_window(map->mlx, map->win);
 	put_map(map);
 	put_minimap(map);
+	put_weapon(map);
 	return (0);
 }
 

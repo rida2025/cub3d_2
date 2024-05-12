@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 13:33:17 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:23:13 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ void	set_angle(t_map *map)
 		map->angle = M_PI;
 	else if (map->direction == 'N')	
 		map->angle = (M_PI * 3) / 2;
-}
-
-void	set_important_values2(t_map *map)
-{
 	map->rot_speed = 1 *  (M_PI / 180);
 	map->fov = 60 * (M_PI / 180);
 	map->num_rays = SCREEN_WIDTH;
@@ -91,7 +87,6 @@ int	parsing(t_map *map, char *map_name)
 		return (1);
 	set_important_values(map, 0, 0);
 	set_angle(map);
-	set_important_values2(map);
 	set_texture(map);
 	map->floor_color = encode_rgb(map->floor[0], map->floor[1], map->floor[2]);
 	map->ceiling_color = encode_rgb(map->ceiling[0], map->ceiling[1],

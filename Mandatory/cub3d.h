@@ -79,10 +79,10 @@ typedef struct s_map
 	double		mini_y;
 	double		my;
 	double		mx;
-	double		player_x; // position in the map for the grid so its + 0.5 * 32
-	double		player_y; // position in the map for the grid so its + 0.5 * 32
-	double		position_x; //position in the map
-	double		position_y; //position in the map
+	double		player_x;
+	double		player_y;
+	double		position_x;
+	double		position_y;
 	double		xstep;
 	double		ystep;
 	double		intercept_x;

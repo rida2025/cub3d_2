@@ -51,6 +51,11 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+typedef struct	s_animation
+{
+	void	*image[16];
+} t_animation;
+
 typedef struct s_map
 {
 	t_data		img;
@@ -59,6 +64,8 @@ typedef struct s_map
 	t_data		we_txture;
 	t_data		es_txture;
 	t_data		door_texture;
+	t_animation	ptr;
+	int			i;
 	int			height;
 	int			width;
 	void		*mlx;
@@ -80,10 +87,10 @@ typedef struct s_map
 	double		mini_y;
 	double		my;
 	double		mx;
-	double		player_x; // position in the map for the grid so its + 0.5 * 32
-	double		player_y; // position in the map for the grid so its + 0.5 * 32
-	double		position_x; //position in the map
-	double		position_y; //position in the map
+	double		player_x;
+	double		player_y;
+	double		position_x;
+	double		position_y;
 	double		xstep;
 	double		ystep;
 	double		intercept_x;
