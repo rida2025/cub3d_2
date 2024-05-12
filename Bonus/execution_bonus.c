@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/12 21:49:53 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:07:11 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -573,6 +573,7 @@ int ft_mouse_rotation(int x, int y, t_map *map)
 	helper = 0;
 	if (map->focus_mode == 0)
 	{
+		mlx_mouse_hide();
 		if (x > SCREEN_WIDTH || x < 0 || y > SCREEN_HEIGHT || y < 0)
 		{
 			mlx_mouse_move(map->win, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
@@ -588,6 +589,11 @@ int ft_mouse_rotation(int x, int y, t_map *map)
 			map->drawzy = 1;
 		}
 	}
+	else
+	{
+		mlx_mouse_show();
+	}
+	
 	return 0;
 }
 
