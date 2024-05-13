@@ -206,7 +206,6 @@ char	*ft_strjoinx(char *remain, char *buffer);
 char	*get_next_line(int fd);
 int		get_lines(int fd);
 int		stop_here2(char *str);
-double	normlize(double rayangle);
 
 //errors
 void	error1(void);
@@ -222,4 +221,30 @@ void	print_map(char **map);
 
 //garbage collactor
 void	*ft_malloc(size_t a);
+
+//execution it self
+int		is_wall2(t_map *map, double horizontal_x, double horizontal_y);
+void	horizontal_helper(t_map *map, double ray_angle);
+void	horizontal(t_map *map, double ray_angle);
+void	vertical_helper(t_map *map, double ray_angle);
+void	vertical(t_map *map, double ray_angle);
+void	reset(t_map *map, double ray_angle);
+double	distance_finder(double x1, double y1, double x2, double y2);
+void	find_helper(t_map *map, double *hori_dis, double *vert_dis);
+void	find_shortest(t_map *map);
+void	rendering_helper(t_map *map, int *top, int *bottom, double ray_angle);
+t_data	*img_found(t_map *map, double ray_angle);
+void	img_helper(t_map *map, t_data *img);
+void	rendering(t_map *map, int column, double ray_angle);
+void	ray_casting(t_map *map, int column, double ray_angle);
+void	put_map(t_map *map);
+double	normlize(double rayangle);
+void	ft_calc_right(t_map *map);
+void	ft_calc_left(t_map *map);
+void	ft_calc_front(t_map *map);
+void	ft_calc_back(t_map *map);
+void	ft_calc_right_angle(t_map *map);
+void	ft_calc_left_angle(t_map *map);
+int		ft_update(t_map *map);
+
 #endif

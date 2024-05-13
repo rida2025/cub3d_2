@@ -30,7 +30,11 @@ SRC_C =	Mandatory/ft_isnum.c \
 		Mandatory/parsing_utilitis2.c \
 		Mandatory/parsing_utilitis3.c \
 		Mandatory/parsing_utilitis4.c \
-		Mandatory/execution_utilitis.c
+		Mandatory/execution_utilitis.c \
+		Mandatory/execution2.c \
+		Mandatory/execution3.c \
+		Mandatory/execution4.c \
+		Mandatory/execution5.c \
 
 BSRC_C = Bonus/ft_isnum_bonus.c \
 		Bonus/ft_split_bonus.c \
@@ -60,7 +64,14 @@ BSRC_C = Bonus/ft_isnum_bonus.c \
 		Bonus/parsing_utilitis2_bonus.c \
 		Bonus/parsing_utilitis3_bonus.c \
 		Bonus/parsing_utilitis4_bonus.c \
-		Bonus/execution_utilitis_bonus.c
+		Bonus/execution_utilitis_bonus.c \
+		Bonus/execution2_bonus.c \
+		Bonus/execution3_bonus.c \
+		Bonus/execution4_bonus.c \
+		Bonus/execution5_bonus.c \
+		Bonus/execution6_bonus.c \
+		Bonus/execution7_bonus.c \
+		Bonus/help_execution_bonus.c \
 
 COMPILER = cc
 

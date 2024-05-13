@@ -1,49 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   execution7_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 12:51:11 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/13 17:26:06 by mel-jira         ###   ########.fr       */
+/*   Created: 2024/05/13 18:37:20 by mel-jira          #+#    #+#             */
+/*   Updated: 2024/05/13 18:37:46 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-int	is_wall2(t_map *map, double horizontal_x, double horizontal_y)
-{
-	int	x;
-	int	y;
-
-	x = floor(horizontal_x / 32);
-	y = floor(horizontal_y / 32);
-	if (y < 0 || y >= (map->my)
-		|| x < 0 || x >= (map->mx))
-		return (0);
-	if (map->map[y][x] == '1')
-		return (1);
-	return (0);
-}
-
-void	horizontal_helper(t_map *map, double ray_angle)
-{
-	map->intercept_y = floor(map->player_y / 32) * 32;
-	if (map->dawn)
-		map->intercept_y += 32;
-	map->intercept_x = map->player_x \
-	+ (map->intercept_y - map->player_y) / tan(ray_angle);
-	map->ystep = 32;
-	if (map->up)
-		map->ystep *= -1;
-	map->xstep = 32 / tan(ray_angle);
-	if (map->left && map->xstep > 0)
-		map->xstep *= -1;
-	if (map->right && map->xstep < 0)
-		map->xstep *= -1;
-	map->horizontal = 0;
-}
+#include "cub3d_bonus.h"
 
 void	horizontal(t_map *map, double ray_angle)
 {
@@ -54,11 +21,11 @@ void	horizontal(t_map *map, double ray_angle)
 	horizontal_y = map->intercept_y;
 	horizontal_x = map->intercept_x;
 	while (horizontal_y >= 0 && horizontal_x >= 0
-		&& horizontal_x <= ((map->mx - 2) * 32)
-		&& horizontal_y <= ((map->my - 2) * 32))
+		&& horizontal_x <= ((map->mx) * 32) && horizontal_y <= ((map->my) * 32))
 	{
 		if (is_wall2(map, horizontal_x, (horizontal_y - map->up)))
 		{
+			map->doorh = is_what(map, horizontal_x, (horizontal_y - map->up));
 			map->horizontal_x = horizontal_x;
 			map->horizontal_y = horizontal_y;
 			map->horizontal = 1;
@@ -67,8 +34,6 @@ void	horizontal(t_map *map, double ray_angle)
 		horizontal_x += map->xstep;
 		horizontal_y += map->ystep;
 	}
-	map->horizontal_x = LONG_MAX;
-	map->horizontal_y = LONG_MAX;
 }
 
 void	vertical_helper(t_map *map, double ray_angle)
@@ -89,16 +54,47 @@ void	vertical_helper(t_map *map, double ray_angle)
 	map->vertical = 0;
 }
 
-int	execution(t_map map)
+void	vertical(t_map *map, double ray_angle)
 {
-	map.img.img = mlx_new_image(map.mlx, map.width, map.height);
-	mlx_hook(map.win, 17, 0, &close_window, &map);
-	map.img.addr = mlx_get_data_addr(map.img.img,
-			&map.img.bits_per_m_pixel, &map.img.line_length,
-			&map.img.endian);
-	mlx_hook(map.win, 2, 0, key_hook1, &map);
-	mlx_hook(map.win, 3, 0, key_hook2, &map);
-	mlx_loop_hook(map.mlx, ft_update, &map);
-	mlx_loop(map.mlx);
-	return (0);
+	double	vertical_x;
+	double	vertical_y;
+
+	vertical_helper(map, ray_angle);
+	vertical_y = map->intercept_y;
+	vertical_x = map->intercept_x;
+	while (vertical_y >= 0 && vertical_x >= 0
+		&& vertical_x <= ((map->mx) * 32) && vertical_y <= ((map->my) * 32))
+	{
+		if (is_wall2(map, (vertical_x - map->left), vertical_y))
+		{
+			map->doorv = is_what(map, (vertical_x - map->left), vertical_y);
+			map->vertical_x = vertical_x;
+			map->vertical_y = vertical_y;
+			map->vertical = 1;
+			return ;
+		}
+		vertical_x += map->xstep;
+		vertical_y += map->ystep;
+	}
+}
+
+void	reset(t_map *map, double ray_angle)
+{
+	map->right = 0;
+	map->up = 0;
+	map->left = 0;
+	map->dawn = 0;
+	if (ray_angle > 0 && ray_angle < M_PI)
+		map->dawn = 1;
+	if (!map->dawn)
+		map->up = 1;
+	if (ray_angle < (M_PI / 2) || ray_angle > (3 * M_PI) / 2)
+		map->right = 1;
+	if (!map->right)
+		map->left = 1;
+}
+
+double	distance_finder(double x1, double y1, double x2, double y2)
+{
+	return (sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1))));
 }

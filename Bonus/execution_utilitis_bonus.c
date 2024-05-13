@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:24:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/11 18:05:22 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:39:50 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,31 +77,4 @@ int	key_hook1(int keycode, t_map *map)
 	else if (keycode == 14)
 		open_or_close(map);
 	return (0);
-}
-
-int	key_hook2(int keycode, t_map *map)
-{
-	if (keycode == 13 || keycode == 126)
-		map->move_up = 0;
-	else if (keycode == 1 || keycode == 125)
-		map->move_down = 0;
-	else if (keycode == 124)
-		map->move_right = 0;
-	else if (keycode == 123)
-		map->move_left = 0;
-	else if (keycode == 2)
-		map->move_right_angle = 0;
-	else if (keycode == 0)
-		map->move_left_angle = 0;
-	return (0);
-}
-
-void	calc_minimap(t_map *map)
-{
-	map->mini_x = map->player_x / 32;
-	map->mini_y = map->player_y / 32;
-	map->mini_x *= 16;
-	map->mini_y *= 16;
-	map->pos_x = map->mini_x - 100;
-	map->pos_y = map->mini_y - 100;
 }
