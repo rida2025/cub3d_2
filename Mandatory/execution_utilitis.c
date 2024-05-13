@@ -23,11 +23,12 @@ int	encode_rgb(uint8_t red, uint8_t green, uint8_t blue)
 	return (red << 16 | green << 8 | blue);
 }
 
-void	my_mlx_M_PIxel_put(t_data *data, int x, int y, int color)
+void	my_mlx_m_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + ((y * data->line_length) + (x * (data->bits_per_M_PIxel / 8)));
+	dst = data->addr + ((y * data->line_length) \
+	+ (x * (data->bits_per_m_pixel / 8)));
 	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
 		*(unsigned int *)dst = color;
 }

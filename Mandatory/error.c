@@ -14,7 +14,7 @@
 
 void	error1(void)
 {
-	write(2, "Error permission denied can't open map or it doesn't exist\n", 60);
+	write(2, "Error permission denied cant open map or it doesnt exist\n", 58);
 }
 
 void	error2(void)

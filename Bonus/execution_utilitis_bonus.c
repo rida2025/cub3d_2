@@ -23,19 +23,20 @@ int	encode_rgb(uint8_t red, uint8_t green, uint8_t blue)
 	return (red << 16 | green << 8 | blue);
 }
 
-void	my_mlx_M_PIxel_put(t_data *data, int x, int y, int color)
+void	my_mlx_m_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + ((y * data->line_length) + (x * (data->bits_per_M_PIxel / 8)));
+	dst = data->addr + ((y * data->line_length) \
+	+ (x * (data->bits_per_m_pixel / 8)));
 	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
 		*(unsigned int *)dst = color;
 }
 
 void	open_or_close(t_map *map)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = floor(map->player_x + (cos(map->angle) * 16)) / 32;
 	y = floor(map->player_y + (sin(map->angle) * 16)) / 32;
@@ -43,7 +44,8 @@ void	open_or_close(t_map *map)
 		map->map[y][x] = 'O';
 	else if (map->map[y][x] == 'O')
 	{
-		if (map->map[(int)(map->player_y / 32)][(int)(map->player_x / 32)] != 'O')
+		if (map->map[(int)(map->player_y / 32)][(int)(map->player_x / 32)] \
+		!= 'O')
 			map->map[y][x] = 'D';
 	}
 	map->drawzy = 1;
@@ -100,6 +102,6 @@ void	calc_minimap(t_map *map)
 	map->mini_y = map->player_y / 32;
 	map->mini_x *= 16;
 	map->mini_y *= 16;
-	map->position_x = map->mini_x - 100;
-	map->position_y = map->mini_y - 100;
+	map->pos_x = map->mini_x - 100;
+	map->pos_y = map->mini_y - 100;
 }

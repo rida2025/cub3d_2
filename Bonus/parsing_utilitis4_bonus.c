@@ -25,7 +25,7 @@ void	basic_init(t_mapheader *mapheader)
 int	count_c(char *str, char c)
 {
 	int	i;
-	
+
 	i = 0;
 	while (*str)
 	{

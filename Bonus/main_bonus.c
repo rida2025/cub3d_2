@@ -12,9 +12,9 @@
 
 #include "cub3d_bonus.h"
 
-void    f(void)
+void	f(void)
 {
-    system("leaks cub3D");
+	system("leaks cub3D");
 }
 
 t_leaks	*ft_last_node(t_leaks *node)
