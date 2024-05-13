@@ -48,7 +48,7 @@ char	**get_only_map(char **map, int i)
 	new_map = NULL;
 	p = 0;
 	y = map_size(map, i);
-	new_map = malloc(sizeof(char *) * (y + 1));
+	new_map = ft_malloc(sizeof(char *) * (y + 1));
 	if (!new_map)
 		return (NULL);
 	while (map[(i + p)])

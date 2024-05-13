@@ -22,7 +22,7 @@ char	**create_cpy(char **map)
 	i = -1;
 	while (map[x])
 		x++;
-	cpymap = (char **)malloc(sizeof(char *) * (x + 1));
+	cpymap = (char **)ft_malloc(sizeof(char *) * (x + 1));
 	if (!cpymap)
 		return (NULL);
 	while (map[++i])

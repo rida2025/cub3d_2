@@ -19,7 +19,7 @@ char	*fill_it1(char **map, int x, int y)
 
 	i = 0;
 	new_map = NULL;
-	new_map = malloc(sizeof(char) * (x + 1));
+	new_map = ft_malloc(sizeof(char) * (x + 1));
 	if (!new_map)
 		return (NULL);
 	while (i < x)
@@ -43,7 +43,7 @@ char	*fill_it2(int x)
 
 	i = 0;
 	new_map = NULL;
-	new_map = malloc(sizeof(char) * (x + 1));
+	new_map = ft_malloc(sizeof(char) * (x + 1));
 	if (!new_map)
 		return (NULL);
 	while (i < x)
@@ -93,7 +93,7 @@ char	**make_it_bigger_square(char **map, int x, int y, int i)
 	cpy = NULL;
 	x = get_biggest_x(map) + 2;
 	y = get_biggest_y(map) + 2;
-	cpy = malloc(sizeof(char *) * (y + 1));
+	cpy = ft_malloc(sizeof(char *) * (y + 1));
 	if (!cpy)
 		return (NULL);
 	cpy[0] = fill_it2(x);

@@ -46,7 +46,7 @@ void *mlx_init()
   int		bidon;
   int		i;
 
-  if ((new_mlx = malloc(sizeof(*new_mlx))) == NULL)
+  if ((new_mlx = ft_malloc(sizeof(*new_mlx))) == NULL)
     return ((void *)0);
   new_mlx->win_list = NULL;
   new_mlx->img_list = NULL;

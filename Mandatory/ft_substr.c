@@ -23,10 +23,10 @@ static	char	*ft_cpystr(char const *s, unsigned int start, size_t len)
 	if (len > size - start)
 	{
 		len = size - start;
-		str = (char *)malloc((size - start) * sizeof(char) + 1);
+		str = (char *)ft_malloc((size - start) * sizeof(char) + 1);
 	}
 	else
-		str = (char *)malloc(len * sizeof(char) + 1);
+		str = (char *)ft_malloc(len * sizeof(char) + 1);
 	if (str == NULL)
 		return (NULL);
 	while (i < len)
@@ -48,7 +48,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if ((unsigned int)ft_strlen(s) <= start)
 	{
-		str = (char *)malloc(1);
+		str = (char *)ft_malloc(1);
 		if (str == NULL)
 			return (NULL);
 		*str = '\0';

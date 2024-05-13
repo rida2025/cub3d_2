@@ -13,7 +13,7 @@ void display_log(GLuint object, void (*param_func)(), void (*getlog_func)())
   char *log;
 
   param_func(object, GL_INFO_LOG_LENGTH, &log_length);
-  log = malloc(log_length);
+  log = ft_malloc(log_length);
   getlog_func(object, log_length, NULL, log);
   fprintf(stderr, "%s", log);
   free(log);

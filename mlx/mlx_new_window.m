@@ -417,7 +417,7 @@ int get_mouse_button(NSEventType eventtype)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
-  pixtexbuff = malloc(sizeof(unsigned int)*size_x*size_y);
+  pixtexbuff = ft_malloc(sizeof(unsigned int)*size_x*size_y);
   pixel_nb = size_x*size_y;
   while (pixel_nb--) pixtexbuff[pixel_nb] = 0xFF000000;
   pixel_nb = 0;
@@ -650,7 +650,7 @@ void *mlx_new_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
   mlx_win_list_t	*newwin;
   NSString		*str;
 
-  if ((newwin = malloc(sizeof(*newwin))) == NULL)
+  if ((newwin = ft_malloc(sizeof(*newwin))) == NULL)
     return ((void *)0);
   newwin->img_list = NULL;
   newwin->next = mlx_ptr->win_list;

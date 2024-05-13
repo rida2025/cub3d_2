@@ -17,7 +17,7 @@ char	*ft_read_file(int fd, char	*remain)
 	char	*buffer;
 	int		byte_read;
 
-	buffer = (char *)malloc((1 + 1) * sizeof(char));
+	buffer = (char *)ft_malloc((1 + 1) * sizeof(char));
 	if (!buffer)
 		return (free(remain), remain = NULL, NULL);
 	byte_read = 1;
@@ -47,7 +47,7 @@ char	*ft_get_line(char *remain)
 		len++;
 	if (remain[len] == '\n')
 		len++;
-	line = (char *)malloc((len + 1) * sizeof(char));
+	line = (char *)ft_malloc((len + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
 	while (i < len)
@@ -77,7 +77,7 @@ char	*ft_remove_line(char *remain)
 		len++;
 	if (remain[len] == '\n')
 		len++;
-	str = (char *)malloc(((ft_strlen(remain + len)) + 1) * sizeof(char));
+	str = (char *)ft_malloc(((ft_strlen(remain + len)) + 1) * sizeof(char));
 	if (!str)
 		return (free(remain), remain = NULL, NULL);
 	while (remain[len] != '\0')

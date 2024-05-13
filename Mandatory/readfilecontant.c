@@ -37,7 +37,7 @@ char	**readfilecontant(char *mapname, int fd, int len, int i)
 	char	**map;
 
 	line = NULL;
-	map = (char **)malloc(sizeof(char *) * (len + 1));
+	map = (char **)ft_malloc(sizeof(char *) * (len + 1));
 	if (!map)
 		return (NULL);
 	fd = open(mapname, O_RDONLY);

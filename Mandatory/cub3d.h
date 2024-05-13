@@ -25,7 +25,6 @@
 # define BLUE 0x0000FF
 # define BACKGROUND 0xCDB79E
 
-// # define M_PI 3.1415926535
 # define FOV 60
 # define PLAYER_SPEED 3
 # define ROTATING_SPEED 1
@@ -38,6 +37,12 @@
 # include <math.h>
 # include <limits.h>
 # include "mlx.h"
+
+typedef struct s_leaks
+{
+	void			*ptr;
+	struct s_leaks	*next;
+}	t_leaks;
 
 typedef struct s_data
 {
@@ -215,4 +220,6 @@ void	error_player(void);
 //printing
 void	print_map(char **map);
 
+//garbage collactor
+void	*ft_malloc(size_t a);
 #endif

@@ -22,7 +22,7 @@ char	*ft_strjoinx(char *remain, char *buffer)
 	s2_len = ft_strlen(buffer);
 	i = 0;
 	j = 0;
-	str = (char *)malloc((ft_strlen(remain) + s2_len + 1) * sizeof(char));
+	str = (char *)ft_malloc((ft_strlen(remain) + s2_len + 1) * sizeof(char));
 	if (!str)
 		return (free(remain), remain = NULL, NULL);
 	while (remain[i] != '\0')

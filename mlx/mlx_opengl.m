@@ -28,7 +28,7 @@ void	*mlx_new_opengl_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *ti
   mlx_win_list_t	*newwin;
   NSString		*str;
 
-  if ((newwin = malloc(sizeof(*newwin))) == NULL)
+  if ((newwin = ft_malloc(sizeof(*newwin))) == NULL)
     return ((void *)0);
   newwin->img_list = NULL;
   newwin->next = mlx_ptr->win_list;

@@ -90,7 +90,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	words = ft_count_words(s, c);
-	strs = (char **)malloc((words + 1) * sizeof(char *));
+	strs = (char **)ft_malloc((words + 1) * sizeof(char *));
 	if (strs == NULL)
 		return (NULL);
 	strs = create_string(strs, s, c, words);
