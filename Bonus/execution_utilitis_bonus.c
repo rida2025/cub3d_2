@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utilitis_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkhairi <abkhairi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:24:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/13 18:39:50 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:52:34 by abkhairi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	open_or_close(t_map *map)
 		map->map[y][x] = 'O';
 	else if (map->map[y][x] == 'O')
 	{
-		if (map->map[(int)(map->player_y / 32)][(int)(map->player_x / 32)] \
-		!= 'O')
+		if (!((int)(map->player_y / 32) == y \
+		&& (int)(map->player_x / 32) == x))
 			map->map[y][x] = 'D';
 	}
 	map->drawzy = 1;
