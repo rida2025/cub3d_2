@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:39:56 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 11:08:47 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:23:21 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	ft_atoi(char *arg)
 	}
 	while (arg[i])
 	{
+		if (((result * 10) + (arg[i] - '0')) * sign > 255 \
+		|| ((result * 10) + (arg[i] - '0')) * sign < 0)
+			return (-1);
 		result = (result * 10) + (arg[i] - '0');
 		i++;
 	}
