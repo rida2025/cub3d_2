@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/12 15:23:13 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:16:20 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,43 @@ void	set_angle(t_map *map)
 	map->dawn = 0;
 }
 
+void	set_texture2(t_map *map)
+{
+	map->es_txture.img = mlx_xpm_file_to_image(map->mlx, map->east_path, \
+	&map->es_txture.line_width, &map->es_txture.line_heigth);
+	if (!map->es_txture.img)
+		exit(1);
+	map->es_txture.addr = mlx_get_data_addr(map->es_txture.img, \
+	&map->es_txture.bits_per_m_pixel, \
+	&map->es_txture.line_length, &map->es_txture.endian);
+}
+
 void	set_texture(t_map *map)
 {
 	map->mlx = mlx_init();
 	map->win = mlx_new_window(map->mlx, map->width, map->height, "cub3D");
 	map->no_txture.img = mlx_xpm_file_to_image(map->mlx, map->north_path, \
 	&map->no_txture.line_width, &map->no_txture.line_heigth);
+	if (!map->no_txture.img)
+		exit(1);
 	map->no_txture.addr = mlx_get_data_addr(map->no_txture.img, \
 	&map->no_txture.bits_per_m_pixel, &map->no_txture.line_length, \
 	&map->no_txture.endian);
 	map->so_txture.img = mlx_xpm_file_to_image(map->mlx, map->south_path, \
 	&map->so_txture.line_width, &map->so_txture.line_heigth);
+	if (!map->so_txture.img)
+		exit(1);
 	map->so_txture.addr = mlx_get_data_addr(map->so_txture.img, \
 	&map->so_txture.bits_per_m_pixel, &map->so_txture.line_length, \
 	&map->so_txture.endian);
 	map->we_txture.img = mlx_xpm_file_to_image(map->mlx, map->west_path, \
 	&map->we_txture.line_width, &map->we_txture.line_heigth);
+	if (!map->we_txture.img)
+		exit(1);
 	map->we_txture.addr = mlx_get_data_addr(map->we_txture.img, \
 	&map->we_txture.bits_per_m_pixel, &map->we_txture.line_length, \
 	&map->we_txture.endian);
-	map->es_txture.img = mlx_xpm_file_to_image(map->mlx, map->east_path, \
-	&map->es_txture.line_width, &map->es_txture.line_heigth);
-	map->es_txture.addr = mlx_get_data_addr(map->es_txture.img, \
-	&map->es_txture.bits_per_m_pixel, \
-	&map->es_txture.line_length, &map->es_txture.endian);
+	set_texture2(map);
 }
 
 int	parsing(t_map *map, char *map_name)

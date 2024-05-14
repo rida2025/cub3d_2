@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:16:41 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/13 18:40:07 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:46:26 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void	help_set_texture(t_map *map)
 	map->door_texture.img = mlx_xpm_file_to_image(map->mlx, \
 	"texture/door_texture.xpm", &map->door_texture.line_width, \
 	&map->door_texture.line_heigth);
+	if (!map->door_texture.img)
+		exit(1);
 	map->door_texture.addr = mlx_get_data_addr(map->door_texture.img, \
 	&map->door_texture.bits_per_m_pixel, &map->door_texture.line_length, \
 	&map->door_texture.endian);
