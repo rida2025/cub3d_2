@@ -6,7 +6,7 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:18:35 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/07 15:41:12 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:02:51 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,14 @@ int	valid_colors(t_map *map, char *str, int f_or_c)
 		return (1);
 	while (i < 3 && tmp[i] && tmp[i][0])
 	{
-		if (ft_atoi(tmp[i]) > 255 || ft_atoi(tmp[i]) < 0 || !ft_isnum(tmp[i]))
+		if (ft_atoi(tmp[i], 0) > 255 || ft_atoi(tmp[i], 0) < 0)
 			return (1);
 		if (f_or_c)
-			map->ceiling[i] = ft_atoi(tmp[i]);
+			map->ceiling[i] = ft_atoi(tmp[i], 0);
 		else
-			map->floor[i] = ft_atoi(tmp[i]);
+			map->floor[i] = ft_atoi(tmp[i], 0);
 		i++;
 	}
-	if (i != 3)
-		return (1);
 	if (tmp[i])
 		return (1);
 	return (0);

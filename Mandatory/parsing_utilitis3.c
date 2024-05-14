@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utilitis3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkhairi <abkhairi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:08:00 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:49 by abkhairi         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:09:25 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_only_map(char **map, int i)
 	{
 		if (!search_line(map[(i)], "01NSWE"))
 			return (1);
-		(i)++;
+		i++;
 	}
 	return (0);
 }

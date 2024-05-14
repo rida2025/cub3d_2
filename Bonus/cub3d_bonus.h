@@ -208,7 +208,7 @@ int		ft_isnum(char *str);
 char	*ft_strchr(char *str, char c);
 int		ft_strcmp(char *str1, char *str2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_atoi(char *arg);
+int		ft_atoi(char *arg, int i);
 int		ft_is_space(char c);
 int		ft_strcmp(char *str1, char *str2);
 int		parsing(t_map *map, char *map_name);
