@@ -75,7 +75,7 @@ BSRC_C = Bonus/ft_isnum_bonus.c \
 
 COMPILER = cc
 
-FLAGS = -Wall -Wextra -Werror  -g -I mlx/ #-fsanitize=address -Ofast -O3
+FLAGS = -Wall -Wextra -Werror -I mlx/ -Ofast -O3
 
 OBJC = $(SRC_C:.c=.o)
 BOBJC = $(BSRC_C:_bonus.c=_bonus.o)

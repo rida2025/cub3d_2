@@ -6,34 +6,34 @@
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:46:40 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/14 16:29:21 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 19:11:04 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_colors(t_map *map, char *line, t_mapheader *mapheader, int *i)
+int	check_colors(t_map *map, char *line, t_mapheader *mapheader, int i)
 {
 	int	f_or_c;
 
-	if (!ft_strncmp(&line[*i], "F", 1))
+	if (!ft_strncmp(&line[i], "F", 1))
 	{
 		mapheader->f += 1;
 		f_or_c = 0;
 	}
-	else if (!ft_strncmp(&line[*i], "C", 1))
+	else if (!ft_strncmp(&line[i], "C", 1))
 	{
 		mapheader->c += 1;
 		f_or_c = 1;
 	}
 	else
 		return (1);
-	*i += 1;
-	if (!line[*i])
+	i += 1;
+	if (!line[i])
 		return (1);
-	while (line[*i] && ft_is_space(line[*i]))
-		(*i)++;
-	if (valid_colors(map, &line[*i], f_or_c))
+	while (line[i] && ft_is_space(line[i]))
+		(i)++;
+	if (valid_colors(map, &line[i], f_or_c))
 		return (1);
 	return (0);
 }
@@ -62,30 +62,30 @@ int	path_exist(t_map *map, char *str, int direction)
 	return (0);
 }
 
-int	check_texture(t_map *map, char *line, t_mapheader *mapheader, int *i)
+int	check_texture(t_map *map, char *line, t_mapheader *mapheader, int i)
 {
 	int	direction;
 
 	direction = 0;
-	if (!ft_strncmp(&line[*i], "NO", 2) && (++direction))
+	if (!ft_strncmp(&line[i], "NO", 2) && (++direction))
 		mapheader->no += 1;
-	else if (!ft_strncmp(&line[*i], "SO", 2) && (++direction) && (++direction))
+	else if (!ft_strncmp(&line[i], "SO", 2) && (++direction) && (++direction))
 		mapheader->so += 1;
-	else if (!ft_strncmp(&line[*i], "WE", 2) && (--direction))
+	else if (!ft_strncmp(&line[i], "WE", 2) && (--direction))
 		mapheader->we += 1;
-	else if (!ft_strncmp(&line[*i], "EA", 2))
+	else if (!ft_strncmp(&line[i], "EA", 2))
 		mapheader->ea += 1;
 	else
 		return (1);
-	*i += 1;
-	if (!line[*i])
+	i += 1;
+	if (!line[i])
 		return (1);
-	*i += 1;
-	if (!line[*i])
+	i += 1;
+	if (!line[i])
 		return (1);
-	while (line[*i] && ft_is_space(line[*i]))
-		(*i)++;
-	if (!line[*i] || path_exist(map, &line[*i], direction))
+	while (line[i] && ft_is_space(line[i]))
+		(i)++;
+	if (!line[i] || path_exist(map, &line[i], direction))
 		return (1);
 	return (0);
 }
@@ -100,8 +100,8 @@ int	check_line(t_map *map, char *line, t_mapheader *mapheader, int i)
 	i2 = i;
 	if (line[i])
 	{
-		if (check_texture(map, &line[i], mapheader, &i)
-			&& check_colors(map, &line[i2], mapheader, &i2))
+		if (check_texture(map, &line[i], mapheader, 0)
+			&& check_colors(map, &line[i2], mapheader, 0))
 			return (1);
 	}
 	return (0);

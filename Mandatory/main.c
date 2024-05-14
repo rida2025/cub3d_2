@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandatory.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jira <mel-jira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:13:22 by mel-jira          #+#    #+#             */
-/*   Updated: 2024/05/09 12:07:41 by mel-jira         ###   ########.fr       */
+/*   Updated: 2024/05/14 19:13:54 by mel-jira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	f(void)
-{
-	system("leaks cub3D");
-}
 
 t_leaks	*ft_last_node(t_leaks *node)
 {
@@ -64,7 +59,6 @@ int	main(int argc, char **argv)
 {
 	t_map	map;
 
-	atexit(f);
 	if (argc == 2)
 	{
 		if (parsing(&map, argv[1]))

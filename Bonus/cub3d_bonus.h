@@ -183,9 +183,9 @@ int		get_biggest_x2(char **map, t_map *info);
 int		get_biggest_y2(char **map, t_map *info);
 void	basic_init(t_mapheader *mapheader);
 int		valid_colors(t_map *map, char *str, int f_or_c);
-int		check_colors(t_map *map, char *line, t_mapheader *mapheader, int *i);
+int		check_colors(t_map *map, char *line, t_mapheader *mapheader, int i);
 int		path_exist(t_map *map, char *str, int direction);
-int		check_texture(t_map *map, char *line, t_mapheader *mapheader, int *i);
+int		check_texture(t_map *map, char *line, t_mapheader *mapheader, int i);
 int		check_line(t_map *map, char *line, t_mapheader *mapheader, int i);
 void	calc_minimap(t_map *map);
 
